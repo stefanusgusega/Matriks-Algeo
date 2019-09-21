@@ -250,6 +250,29 @@ public class matriks
                 }
 
         }
+        float DeterminanKofaktor (matriks M) {
+                int i,j;
+                // ALGORITMA //
+                if (M.NBrsEff == 2) {
+                        return (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
+                }
+                else {
+                        matriks MKof = new matriks();
+                        MKof.MakeMATRIKS(NBrsEff-1, NKolEff-1);
+                        float det = 0;
+                        i = 1;
+                        for (j=1; j<=NKolEff; j++) {
+                                for (int k=2; k<=NBrsEff; k++) {
+                                        for (int l=1; l<=NKolEff; l++) {
+                                                if (j<l) {
+                                                        return 0;
+                                                }
+                                        }
+                                }
+                        }
+                        return 0;
+                }
+        }
 
         public static void main (String[] args)
         {
@@ -265,6 +288,7 @@ public class matriks
                 M.TulisMATRIKS();
                 M.GaussSPL();
                 M.TulisMATRIKS();
+                System.out.println(M.DeterminanKofaktor(M));
 
                 sc.close();
         }
