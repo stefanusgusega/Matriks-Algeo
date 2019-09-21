@@ -266,6 +266,6 @@ public class matriks
                 M.GaussSPL();
                 M.TulisMATRIKS();
 
-
+                sc.close();
         }
     }
