@@ -57,16 +57,131 @@ public class matriks
         }
         
         }
+
+        void BacaMATRIKSAug (int NBAug, int NKAug)
+        /* I.S. IsIdxValid(NB,NK) */
+        /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
+        /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
+        /* Selanjutnya membaca nilai elemen per baris dan kolom */
+        /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
+        1 2 3
+        4 5 6
+        8 9 10
+        */
+        {
+        MakeMATRIKS(NBAug,NKAug-1);
+        int i,j;
+        for (i=1;i<=NBAug;i++)
+        {
+                for (j=1;j<=NKAug;j++)
+                {
+                mem[i][j]=sc.nextInt();
+                }
+        }
+        
+        }
+
         void TulisMATRIKS() {
                 MakeMATRIKS(NBrsEff,NKolEff);
 		System.out.println("\nMatriksnya adalah :");
 		for(int i=1; i <=NBrsEff; i++) {
 			for(int j=1; j <=NKolEff; j++) {
+                                if (mem[i][j]==-0)
+                                {
+                                        mem[i][j]=mem[i][j]+0;
+                                }
 				System.out.print("\t" + mem[i][j]);
 			}
 			System.out.println();
 		}
-	}
+        }
+        
+        void TulisMATRIKSAug() {
+		System.out.println("\nMatriksnya adalah :");
+		for(int i=1; i <=NBrsEff; i++) {
+			for(int j=1; j <=NKolEff+1; j++) {
+                                if (mem[i][j]==-0)
+                                {
+                                        mem[i][j]=mem[i][j]+0;
+                                }
+				System.out.print("\t" + mem[i][j]);
+			}
+			System.out.println();
+		}
+        }
+/*   
+        void SolusiSPL (int NBrsAug, int NKolAug) 
+         Kol masukan adalah kolom AUGMENTED 
+        {
+                int i,j;
+                char[] alph = new char[]{'t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'};
+                String[] solSPL= new String[NKolAug-1];
+                for (i=NBrsAug; i>=1; i--)
+                {
+                        
+                        if ((SumIdxFoundNonZero(i)==0)&&(mem[i][NKolAug]!=0))
+                        {
+                                System.out.println("Tidak ada solusi SPLnya\n");
+                                break;
+                        }
+                        else if ((SumIdxFoundNonZero(i)==1))
+                        {
+                                for (j=1;j<=NBrsAug-1;j++)
+                                {
+                                        if(mem[i][j]!=0)
+                                        {
+                                                solSPL[j]=mem[i][j];
+                                        }
+                                }
+                        }
+                        else if ((SumIdxFoundNonZero(i)>1))
+                        {
+                                String elmt;
+                                for (j=NBrsAug-1;j>=1;j--)
+                                {
+                                        if(mem[i][j]!=0)
+                                        {
+                                               if (IsAdaSolSPL(i,j,j))
+                                               {
+                                                
+                                                elmt=elemt+mem[i][NKolAug]-mem[i][j]*solSPL[j];
+                                               }
+                                        }
+
+
+                                }
+                        }
+                        
+                }
+        }
+
+        boolean IsAdaSolSPL(int acbar, int ackol, int idxarray )
+        {
+                if (mem[acbar][ackol]!=0 && solSPL[idxarray]!=null)
+                {
+                        return true;
+                }
+                else{
+                        return false;
+                }
+        }
+*/
+        int SumIdxFoundNonZero (int acbar)
+        {
+                
+                int j;
+                int sum;
+                sum=0;
+                for (j=1;j<=NKolEff;j++)
+                {
+                        if (mem[acbar][j]!=0)
+                        {
+                                sum=sum+1;
+                        }
+                }
+                return sum;
+                
+        }
 
         boolean IsFound1Kolom (int acbar,int ackol)
         /* I.S Kolom Valid*/
@@ -131,7 +246,7 @@ public class matriks
         void OBEtukar (int bartukar, int acbar)
         {
                 int j;
-                for (j=1;j<=NKolEff;j++)
+                for (j=1;j<=NKolEff+1;j++)
                 {
                         float temp;
                         temp=mem[(acbar)][(j)];
@@ -144,14 +259,13 @@ public class matriks
         {
                 int j;
                 float ac;
-                ac = mem[(barkurang)][(kolkurang)]/mem[(acbar)][(ackol)];
-                if (mem[(barkurang)][(kolkurang)]!=0)
-                {
-                        for (j=kolkurang;j<=NKolEff;j++)
+                ac = (float)mem[(barkurang)][(kolkurang)]/mem[(acbar)][(ackol)];
+    
+                        for (j=1;j<=NKolEff+1;j++)
                         {
                         mem[(barkurang)][(j)]=mem[(barkurang)][(j)]-mem[(acbar)][(j)]*ac; 
                         }
-                }
+                
         }
 
         void OBEUtama (int barkurang, int ackol)
@@ -159,9 +273,11 @@ public class matriks
                 int j,ac1,ac2;
                 ac1=barkurang;
                 ac2=ackol;
-                for (j=1;j<=NKolEff;j++)
+                float ac;
+                ac=mem[ac1][ac2];
+                for (j=1;j<=NKolEff+1;j++)
                 {
-                       mem[barkurang][j]=mem[barkurang][j]/mem[ac1][ac2];
+                       mem[barkurang][j]=(float)mem[barkurang][j]/ac;
                 }
         }
 
@@ -179,49 +295,61 @@ public class matriks
                                 for (i=1+k;i<=NBrsEff;i++)
                                 {
                                         utama=1+k;
+                                        System.out.println("www"+utama);
                                         if (i==utama)
                                         //saat baris ke i mula2
                                         {
                                                 keluar=false;
                                                 w=0;
-                                                if (IsFound1Kolom(i+k,j))
+                                                if (IsFound1Kolom(utama,j))
                                                 //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
                                                 {
-                                                        OBEtukar(IdxKolom1(i+k,j),j);
+                                                        OBEtukar(IdxKolom1(i+k,j),i+k);
+                                                        System.out.println("swap obe"+utama+":"+j);
+                                                        
                                                 }  
                                                 
                                                 else
                                                 //saat tidak ada 1
                                                 {
-                                                        if (mem[i+k][j]==0 )
+                                                        if (mem[utama][j]==0 )
                                                         //kalau di baris ke 1+k terdapat 0, maka ditukar sampai bukan 0
                                                         //kalau ternyata 0 semua, maka next langsung ke step berikutnya(tidk dilakukan aksi appun)
                                                         {
-                                                                while ((mem[i+k][j]==0 )&& (!(keluar)))
+                                                                while ((mem[utama][j]==0 )&& (!(keluar)))
                                                                 {
                                                                         w=w+1;
-                                                                        if ((i+k+w)!=NBrsEff)
+                                                                        if ((utama+w)!=NBrsEff)
                                                                         {
                                                                                 keluar=true;
+                                                                                System.out.println("keluar deh acu");
                                                                                 
                                                                         }
                                                                         else
                                                                         {
-                                                                                OBEtukar(i+k+w,i+k);
+                                                                                OBEtukar(utama+w,i+k);
+                                                                                System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 if(mem[i+k][j]==0)
                                                                                 {
-                                                                                        OBEtukar(i+k+w,i+k);
+                                                                                        OBEtukar(utama+w,i+k);
+                                                                                        System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                        OBEUtama(i+k,j);
+                                                                                        OBEUtama(utama,j);
+                                                                                        System.out.println("jadi utama obe udah bukan 0"+utama+":"+j);
                                                                                 }
                                                                         }
                                                                 }
                                                         }
                                                         else
                                                         {
-                                                                OBEUtama (i+k,j);
+
+                                                                OBEUtama(utama,j);
+                                                                System.out.println(mem[utama][j]);
+                                                                System.out.println("jadi utama obe"+utama+":"+j);
+
+
                                                         }
                                                       
                                                  }
@@ -231,13 +359,19 @@ public class matriks
                                         //saat tidak mencari 1 utama
                                         {
 
-                                                if ((mem[i+k][j]!=0 ))
+                                                if ((mem[i][j]!=0 ))
                                                 {
-                                                        OBEkurang(i+k,j,utama,j);
+                                                        OBEkurang(i,j,utama,j);
+                                                        System.out.println("kurang obe bkn utama"+utama+":"+j);
+                                                }
+                                                else{
+                                                        System.out.println(mem[i+k][j]);
+                                                        System.out.println("ajajja");
                                                 }
                                                 
 
                                         }
+                                TulisMATRIKS();      
                                 }
                         }
 
@@ -250,6 +384,186 @@ public class matriks
                 }
 
         }
+
+        
+        void GaussJordan ()
+        /* Berlaku matriks lebih dari 2*2 */
+        {
+                int i,j,k,w,utama;
+                boolean keluar;
+                k=0;
+                keluar=false;
+                for (j=1;j<=NKolEff;j++)
+                {
+                        if (IsIdxEff(k+1,j))
+                        {
+                                utama=1+k;
+                                for (i=1+k;i<=NBrsEff;i++)
+                                {
+                                        System.out.println("www"+utama);
+                                        if (i==utama)
+                                        //saat baris ke i mula2
+                                        {
+                                                keluar=false;
+                                                w=0;
+                                                if (IsFound1Kolom(utama,j))
+                                                //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
+                                                {
+                                                        OBEtukar(IdxKolom1(i+k,j),i+k);
+                                                        System.out.println("swap obe"+utama+":"+j);
+                                                        
+                                                }  
+                                                
+                                                else
+                                                //saat tidak ada 1
+                                                {
+                                                        if (mem[utama][j]==0 )
+                                                        //kalau di baris ke 1+k terdapat 0, maka ditukar sampai bukan 0
+                                                        //kalau ternyata 0 semua, maka next langsung ke step berikutnya(tidk dilakukan aksi appun)
+                                                        {
+                                                                while ((mem[utama][j]==0 )&& (!(keluar)))
+                                                                {
+                                                                        w=w+1;
+                                                                        if ((utama+w)!=NBrsEff)
+                                                                        {
+                                                                                keluar=true;
+                                                                                System.out.println("keluar deh acu");
+                                                                                
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                                OBEtukar(utama+w,i+k);
+                                                                                System.out.println("swap obe dptnya 0"+utama+":"+j);
+                                                                                if(mem[i+k][j]==0)
+                                                                                {
+                                                                                        OBEtukar(utama+w,i+k);
+                                                                                        System.out.println("swap obe dptnya 0"+utama+":"+j);
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                        OBEUtama(utama,j);
+                                                                                        System.out.println("jadi utama obe udah bukan 0"+utama+":"+j);
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                        else
+                                                        {
+
+                                                                OBEUtama(utama,j);
+                                                                System.out.println(mem[utama][j]);
+                                                                System.out.println("jadi utama obe"+utama+":"+j);
+
+
+                                                        }
+                                                      
+                                                 }
+
+                                        }
+                                        else
+                                        //saat tidak mencari 1 utama
+                                        {
+
+                                                if ((mem[i][j]!=0 ))
+                                                {
+                                                        OBEkurang(i,j,utama,j);
+                                                        System.out.println("kurang obe bkn utama"+utama+":"+j);
+                                                }
+                                                                        
+                                        }
+                                }
+
+                                if (IsFound1Kolom(utama,j))
+                                {
+                                        i=1;
+                                        System.out.println("utamanya berapa si "+utama+ "  i nya berapa"+i);
+                                        while (i<utama)
+                                        {
+                                                if ((mem[i][j]!=0 ))
+                                                        {
+                                                                OBEkurang(i,j,utama,j);
+                                                                System.out.println("kurang obe bknnn utama"+utama+":"+j);
+                                                        }  
+                                                i=i+1;
+
+                                                TulisMATRIKSAug();
+                                        }
+                                }   
+                                
+                        }
+
+                        if (keluar==false)
+                        {
+                         k=k+1;
+                         System.out.println("www");
+                        }
+                        
+                }
+
+        }
+        float Determinan ()
+        {
+                return 0;       
+        }
+
+        void CramerSPL()
+        //MATRIKS Harus SINGULAR (n x n)
+        //Matriks Augmentednya harus ( n x n+1 )
+        {
+                
+                int j,i;
+                float det;
+                float[] solSPL= new float[NKolEff];
+                det= Determinan();
+                for (j=1;j<=NKolEff;j++)
+                {
+                       for (i=1;i<=NBrsEff;i++)
+                       {
+                               mem[i][j]=mem[i][NKolEff+1];
+                       }
+                        solSPL[j]=Determinan()/det;
+                        for (i=1;i<=NBrsEff;i++)
+                       {
+                               mem[i][j]=mem[i][NKolEff+1];
+                       }
+                       
+                }
+                
+                System.out.println("Ini hasil SPL Cramer");
+                for (j=1;j<=NKolEff;j++)
+                {
+                        System.out.println("x"+j+"= "+solSPL[j]);
+                }
+
+        }
+
+
+        void InverseSPL ()
+        //MASUKKAN MATRIKS AUGMENTED YANG SUDAH DIINVERS NAMUN NEFF+1 MASI BERISIKAN SOLUSI SPLNYA
+        {
+                int i,j,k;
+                float elmt;
+                float [] solInvers = new float[NBrsEff];
+                for (i=1;i<=NBrsEff;i++)
+                {
+                        j=NKolEff+1;
+                        {
+                        elmt=0;
+                        for (k=1;k<=NKolEff;k++)
+                        {
+                                elmt=elmt+mem[i][k]*mem[k][j];
+                        }
+                        solInvers[i] = elmt;
+                        }
+                }
+                
+                System.out.println("Ini hasil SPL Invers");
+                for (j=1;j<=NKolEff;j++)
+                {
+                        System.out.println("x"+j+"= "+solInvers[j]);
+                }
+        }
+
         float DeterminanKofaktor (matriks M) {
                 int i,j;
                 // ALGORITMA //
@@ -273,7 +587,7 @@ public class matriks
                         return 0;
                 }
         }
-
+        
         public static void main (String[] args)
         {
                 int brs,kol;
@@ -284,12 +598,8 @@ public class matriks
                 kol = sc.nextInt();
 
                 matriks M = new matriks ();
-                M.BacaMATRIKS(brs,kol);
-                M.TulisMATRIKS();
+                M.BacaMATRIKSAug(brs,kol);
                 M.GaussSPL();
-                M.TulisMATRIKS();
-                System.out.println(M.DeterminanKofaktor(M));
-
-                sc.close();
-        }
+                M.TulisMATRIKSAug();
     }
+}
