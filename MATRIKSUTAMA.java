@@ -295,7 +295,6 @@ public class matriks
                                 for (i=1+k;i<=NBrsEff;i++)
                                 {
                                         utama=1+k;
-                                        System.out.println("www"+utama);
                                         if (i==utama)
                                         //saat baris ke i mula2
                                         {
@@ -305,7 +304,6 @@ public class matriks
                                                 //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
                                                 {
                                                         OBEtukar(IdxKolom1(i+k,j),i+k);
-                                                        System.out.println("swap obe"+utama+":"+j);
                                                         
                                                 }  
                                                 
@@ -322,22 +320,18 @@ public class matriks
                                                                         if ((utama+w)!=NBrsEff)
                                                                         {
                                                                                 keluar=true;
-                                                                                System.out.println("keluar deh acu");
                                                                                 
                                                                         }
                                                                         else
                                                                         {
                                                                                 OBEtukar(utama+w,i+k);
-                                                                                System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 if(mem[i+k][j]==0)
                                                                                 {
                                                                                         OBEtukar(utama+w,i+k);
-                                                                                        System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 }
                                                                                 else
                                                                                 {
                                                                                         OBEUtama(utama,j);
-                                                                                        System.out.println("jadi utama obe udah bukan 0"+utama+":"+j);
                                                                                 }
                                                                         }
                                                                 }
@@ -346,9 +340,6 @@ public class matriks
                                                         {
 
                                                                 OBEUtama(utama,j);
-                                                                System.out.println(mem[utama][j]);
-                                                                System.out.println("jadi utama obe"+utama+":"+j);
-
 
                                                         }
                                                       
@@ -362,23 +353,17 @@ public class matriks
                                                 if ((mem[i][j]!=0 ))
                                                 {
                                                         OBEkurang(i,j,utama,j);
-                                                        System.out.println("kurang obe bkn utama"+utama+":"+j);
-                                                }
-                                                else{
-                                                        System.out.println(mem[i+k][j]);
-                                                        System.out.println("ajajja");
                                                 }
                                                 
+                                                
 
-                                        }
-                                TulisMATRIKS();      
+                                        }      
                                 }
                         }
 
                         if (keluar==false)
                         {
                          k=k+1;
-                         System.out.println("www");
                         }
                         
                 }
@@ -400,7 +385,6 @@ public class matriks
                                 utama=1+k;
                                 for (i=1+k;i<=NBrsEff;i++)
                                 {
-                                        System.out.println("www"+utama);
                                         if (i==utama)
                                         //saat baris ke i mula2
                                         {
@@ -410,7 +394,6 @@ public class matriks
                                                 //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
                                                 {
                                                         OBEtukar(IdxKolom1(i+k,j),i+k);
-                                                        System.out.println("swap obe"+utama+":"+j);
                                                         
                                                 }  
                                                 
@@ -427,22 +410,18 @@ public class matriks
                                                                         if ((utama+w)!=NBrsEff)
                                                                         {
                                                                                 keluar=true;
-                                                                                System.out.println("keluar deh acu");
                                                                                 
                                                                         }
                                                                         else
                                                                         {
                                                                                 OBEtukar(utama+w,i+k);
-                                                                                System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 if(mem[i+k][j]==0)
                                                                                 {
                                                                                         OBEtukar(utama+w,i+k);
-                                                                                        System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 }
                                                                                 else
                                                                                 {
                                                                                         OBEUtama(utama,j);
-                                                                                        System.out.println("jadi utama obe udah bukan 0"+utama+":"+j);
                                                                                 }
                                                                         }
                                                                 }
@@ -451,8 +430,6 @@ public class matriks
                                                         {
 
                                                                 OBEUtama(utama,j);
-                                                                System.out.println(mem[utama][j]);
-                                                                System.out.println("jadi utama obe"+utama+":"+j);
 
 
                                                         }
@@ -467,7 +444,6 @@ public class matriks
                                                 if ((mem[i][j]!=0 ))
                                                 {
                                                         OBEkurang(i,j,utama,j);
-                                                        System.out.println("kurang obe bkn utama"+utama+":"+j);
                                                 }
                                                                         
                                         }
@@ -476,17 +452,14 @@ public class matriks
                                 if (IsFound1Kolom(utama,j))
                                 {
                                         i=1;
-                                        System.out.println("utamanya berapa si "+utama+ "  i nya berapa"+i);
                                         while (i<utama)
                                         {
                                                 if ((mem[i][j]!=0 ))
                                                         {
                                                                 OBEkurang(i,j,utama,j);
-                                                                System.out.println("kurang obe bknnn utama"+utama+":"+j);
                                                         }  
                                                 i=i+1;
 
-                                                TulisMATRIKSAug();
                                         }
                                 }   
                                 
@@ -495,7 +468,6 @@ public class matriks
                         if (keluar==false)
                         {
                          k=k+1;
-                         System.out.println("www");
                         }
                         
                 }
