@@ -654,7 +654,112 @@ public class matriks
                 }
                 return hasil;
             }
-
+            void SolusiSPL (matriks MAug) {
+                // I. S. : MAug adalah matriks augmented //
+                // F. S. : Dihasilkan solusi2 SPL //
+                matriks MHasil = new matriks();
+                MHasil.MakeMATRIKS(MAug.NKolEff, 1);
+                if (MAug.SumIdxFoundNonZero(MAug.NBrsEff)==0 && MAug.mem[MAug.NBrsEff][MAug.NKolEff+1]!=0) {
+                        System.out.println("Solusi tidak ada.");
+                }
+                else if (MAug.SumIdxFoundNonZero(MAug.NBrsEff)==1) {
+                        int j = MAug.NKolEff;
+                        for (int i = MAug.NBrsEff; i>=1; i--) {
+                                if (i == MAug.NBrsEff) {
+                                        MHasil.mem[i][1] = (MAug.mem[i][MAug.NKolEff+1]);
+                                        j-=1;
+                                }
+                                else {
+                                        MHasil.mem[i][1] = MAug.mem[i][MAug.NKolEff+1]; 
+                                        for (int k = j+1; k<=MAug.NKolEff; k++) {
+                                                MHasil.mem[i][1] -= MAug.mem[i][k]*MHasil.mem[k][1];
+                                        }
+                                        j-=1;
+                                }
+                        }
+                        System.out.println("Solusi :");
+                        for (int IdxSol1 = 1; IdxSol1 <=MHasil.NBrsEff; IdxSol1++) {
+                                System.out.println("x"+IdxSol1+" = "+MHasil.mem[IdxSol1][1]);
+                        }
+                }
+                else {
+                        char[]simpanchar = new char [100];
+                        char[]par = new char[11];
+                        par[1] = 'p';
+                        par[2] = 'q';
+                        par[3] = 'r';
+                        par[4] = 's';
+                        par[5] = 't';
+                        par[6] = 'u';
+                        par[7] = 'v';
+                        par[8] = 'w';
+                        par[9] = 'x';
+                        par[10] = 'y';
+                        for (int IdxHasil = 1; IdxHasil<=MAug.NKolEff; IdxHasil++) {
+                                simpanchar[IdxHasil] = '0';
+                        }
+                                int n = 1;
+                        for (int l = MAug.NBrsEff; l>=1; l--) {
+                                int Idx1Bawah = 1;
+                                int Idx1Atas = 1;
+                                boolean found1Bawah = false;
+                                boolean found1Atas = false;
+                                while (found1Bawah == false && Idx1Bawah<=MAug.NKolEff) {
+                                        if (MAug.mem[l][Idx1Bawah]==1) {
+                                                found1Bawah = true;
+                                        }
+                                        Idx1Bawah+=1;
+                                }
+                                while (found1Atas == false && Idx1Atas<=MAug.NKolEff) {
+                                        if (MAug.mem[l-1][Idx1Atas]==1) {
+                                                found1Atas = true;
+                                                Idx1Atas+=1;
+                                        }
+                                        else {
+                                                Idx1Atas+=1;
+                                        }
+                                }
+                                Idx1Atas-=1;
+                                Idx1Bawah-=1;
+                                if (found1Bawah && found1Atas) {
+                                        if (Idx1Bawah==MAug.NKolEff) {
+                                                System.out.println("x"+(Idx1Bawah)+" = "+MAug.mem[l][NKolEff+1]);
+                                                for (int a = Idx1Atas+1;a<Idx1Bawah;a++) {
+                                                        simpanchar[a] = par[n];
+                                                        System.out.println("x"+a+" = "+simpanchar[a]);
+                                                }
+                                                n++;
+                                        }
+                                        else {
+                                                for (int a = Idx1Atas+1;a<Idx1Bawah;a++) {
+                                                        simpanchar[a] = par[n];
+                                                        System.out.println("x"+a+" = "+simpanchar[a]);
+                                                }
+                                                n++;
+                                                System.out.print("x"+(Idx1Bawah)+" = "+MAug.mem[l][NKolEff+1]);
+                                                for (int m=Idx1Bawah+1;m<=MAug.NKolEff;m++) {
+                                                        System.out.print("+("+(-1)*MAug.mem[l][m]+simpanchar[m]+")");
+                                                }
+                                                System.out.println();
+                                        }
+                                }
+                                else if (found1Atas && !found1Bawah) {
+                                        for (int b = Idx1Atas+1;b<MAug.NKolEff+1;b++) {
+                                                simpanchar[b] = par[n];
+                                                n++;
+                                                System.out.println("x"+b+" = "+simpanchar[b]);
+                                        }
+                                        if (l==2) {
+                                                System.out.print("x"+1+" = "+MAug.mem[l-1][NKolEff+1]);
+                                                for (int c=Idx1Atas+1;c<=MAug.NKolEff;c++) {
+                                                        System.out.print("+("+(-1)*MAug.mem[l-1][c]+simpanchar[c]+")");
+                                                }
+                                                System.out.println();
+                                        }
+                                }
+                        }
+                }
+                        }
         public static void main (String[] args)
         {
                 int brs,kol;
@@ -668,5 +773,7 @@ public class matriks
                 M.BacaMATRIKSAug(brs,kol);
                 M.GaussSPL();
                 M.TulisMATRIKSAug();
+                M.SolusiSPL(M);
+                sc.close();
     }
 }
