@@ -654,6 +654,81 @@ public class matriks
                 }
                 return hasil;
             }
+	
+	matriks InversGaussJordan(matriks M) {
+                int i, j, k;
+                float faktor;
+                if (DeterminanKofaktor(M) == 0) {
+                        System.out.println("Matriks tidak punya balikan");
+                        return M;
+                }
+                else {
+                        matriks Campuran = new matriks();
+                        Campuran.MakeMATRIKS(M.NBrsEff, M.NKolEff * 2);
+                        for (i = 0; i < M.NBrsEff; i++) {
+                                for (j = 0; j < M.NKolEff * 2; j++) {
+                                        if (j < M.NKolEff) {
+                                                Campuran.mem[i][j] = M.mem[i][j];
+                                        }
+                                        else { // j >= MKolEff
+                                                if (i == j - M.NKolEff) {
+                                                        Campuran.mem[i][j] = 1;
+                                                }
+                                                else {
+                                                        Campuran.mem[i][j] = 0;
+                                                }
+                                        }
+                                }
+                        }
+                        for (j = 0; j < M.NKolEff - 1; j++) {
+                                for (i = j + 1; i < M.NBrsEff; i++) {
+                                        if (Campuran.mem[i][j] != 0) {
+                                                faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
+                                                matriks temp = new matriks();
+                                                temp.MakeMATRIKS(1, Campuran.NKolEff);
+                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                        temp.mem[0][k] = faktor * Campuran.mem[i][k];
+                                                }
+                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                        Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
+                                                }
+                                        }
+                                }
+                        }
+                        for (j = Campuran.NKolEff - 1; j > 0; j--) {
+                                for (i = j - 1; i >= 0; i--) {
+                                        if (Campuran.mem[i][j] != 0) {
+                                                faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
+                                                matriks temp = new matriks();
+                                                temp.MakeMATRIKS(1, Campuran.NKolEff);
+                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                        temp.mem[0][k] = faktor * Campuran.mem[i][k];
+                                                }
+                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                        Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
+                                                }
+                                        }
+                                }
+                        }
+                        for (i = 0; i < Campuran.NBrsEff; i++) {
+                                if (Campuran.mem[i][i] != 1) {
+                                        faktor = 1 / Campuran.mem[i][i];
+                                        for (j = 0; j < Campuran.NKolEff; j++) {
+                                                Campuran.mem[i][j] = Campuran.mem[i][j] / Campuran.mem[i][i];
+                                        }
+                                }
+                        }
+                        matriks hasil = new matriks();
+                        hasil.MakeMATRIKS(M.NBrsEff, M.NKolEff);
+                        for (i = 0; i < M.NBrsEff; i++) {
+                                for (j = 0; j < M.NKolEff; j++) {
+                                        hasil.mem[i][j] = Campuran.mem[i][j+M.NBrsEff];
+                                }
+                        }
+                        return hasil;
+                }
+        }
+	
             void SolusiSPL (matriks MAug) {
                 // I. S. : MAug adalah matriks augmented //
                 // F. S. : Dihasilkan solusi2 SPL //
