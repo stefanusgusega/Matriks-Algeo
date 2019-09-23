@@ -52,7 +52,7 @@ public class matriks
         {
                 for (j=1;j<=NKolEff;j++)
                 {
-                mem[i][j]=sc.nextInt();
+                mem[i][j]=sc.nextFloat();
                 }
         }
         
@@ -75,7 +75,7 @@ public class matriks
         {
                 for (j=1;j<=NKAug;j++)
                 {
-                mem[i][j]=sc.nextInt();
+                mem[i][j]=sc.nextFloat();
                 }
         }
         
@@ -109,42 +109,46 @@ public class matriks
 			System.out.println();
 		}
         }
-/*   
-        void SolusiSPL (int NBrsAug, int NKolAug) 
+ /* 
+        void SolusiSPL (int NBrsAug, int NKolAug, matriks M) 
          Kol masukan adalah kolom AUGMENTED 
         {
                 int i,j;
                 char[] alph = new char[]{'t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'};
-                String[] solSPL= new String[NKolAug-1];
+                float[] solSPL= new float[NKolAug-1];
+                matriks koef = new matriks();
+                koef.MakeMATRIKS(NKolAug-1,NKolAug-1);
                 for (i=NBrsAug; i>=1; i--)
                 {
                         
-                        if ((SumIdxFoundNonZero(i)==0)&&(mem[i][NKolAug]!=0))
+                        if ((SumIdxFoundNonZero(i)==0)&&(M.mem[i][NKolAug]!=0))
                         {
                                 System.out.println("Tidak ada solusi SPLnya\n");
                                 break;
                         }
                         else if ((SumIdxFoundNonZero(i)==1))
                         {
-                                for (j=1;j<=NBrsAug-1;j++)
+                                for (j=1;j<=NKolEff-1;j++)
                                 {
-                                        if(mem[i][j]!=0)
+                                        if(M.mem[i][j]!=0)
                                         {
-                                                solSPL[j]=mem[i][j];
+                                                solSPL[j]=M.mem[i][j];
                                         }
                                 }
                         }
                         else if ((SumIdxFoundNonZero(i)>1))
                         {
-                                String elmt;
-                                for (j=NBrsAug-1;j>=1;j--)
+                                for (j=NKolEff-1;j>=1;j--)
                                 {
-                                        if(mem[i][j]!=0)
+                                        if(M.mem[i][j]!=0)
                                         {
-                                               if (IsAdaSolSPL(i,j,j))
+                                               if (!IsSebelumnyaada(M,i,j))
                                                {
-                                                
-                                                elmt=elemt+mem[i][NKolAug]-mem[i][j]*solSPL[j];
+                                               solSPL[j]= ((float)M.mem[i][NKolAug]/M.Mem[i][j];
+                                               }
+                                               else if (IsSebelumnyaada(M,i,j))
+                                               {
+                                                       koef[j][j]=1;
                                                }
                                         }
 
@@ -154,16 +158,9 @@ public class matriks
                         
                 }
         }
-
-        boolean IsAdaSolSPL(int acbar, int ackol, int idxarray )
+        boolean IsSebelumnyaada (matriks m, int i, int j)
         {
-                if (mem[acbar][ackol]!=0 && solSPL[idxarray]!=null)
-                {
-                        return true;
-                }
-                else{
-                        return false;
-                }
+                return (m.mem[i][i-1]!=0);
         }
 */
         int SumIdxFoundNonZero (int acbar)
@@ -295,7 +292,6 @@ public class matriks
                                 for (i=1+k;i<=NBrsEff;i++)
                                 {
                                         utama=1+k;
-                                        System.out.println("www"+utama);
                                         if (i==utama)
                                         //saat baris ke i mula2
                                         {
@@ -305,7 +301,6 @@ public class matriks
                                                 //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
                                                 {
                                                         OBEtukar(IdxKolom1(i+k,j),i+k);
-                                                        System.out.println("swap obe"+utama+":"+j);
                                                         
                                                 }  
                                                 
@@ -322,22 +317,18 @@ public class matriks
                                                                         if ((utama+w)!=NBrsEff)
                                                                         {
                                                                                 keluar=true;
-                                                                                System.out.println("keluar deh acu");
                                                                                 
                                                                         }
                                                                         else
                                                                         {
                                                                                 OBEtukar(utama+w,i+k);
-                                                                                System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 if(mem[i+k][j]==0)
                                                                                 {
                                                                                         OBEtukar(utama+w,i+k);
-                                                                                        System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 }
                                                                                 else
                                                                                 {
                                                                                         OBEUtama(utama,j);
-                                                                                        System.out.println("jadi utama obe udah bukan 0"+utama+":"+j);
                                                                                 }
                                                                         }
                                                                 }
@@ -347,7 +338,6 @@ public class matriks
 
                                                                 OBEUtama(utama,j);
                                                                 System.out.println(mem[utama][j]);
-                                                                System.out.println("jadi utama obe"+utama+":"+j);
 
 
                                                         }
@@ -362,23 +352,15 @@ public class matriks
                                                 if ((mem[i][j]!=0 ))
                                                 {
                                                         OBEkurang(i,j,utama,j);
-                                                        System.out.println("kurang obe bkn utama"+utama+":"+j);
                                                 }
-                                                else{
-                                                        System.out.println(mem[i+k][j]);
-                                                        System.out.println("ajajja");
-                                                }
-                                                
-
-                                        }
-                                TulisMATRIKS();      
+                                              
+                                        }    
                                 }
                         }
 
                         if (keluar==false)
                         {
                          k=k+1;
-                         System.out.println("www");
                         }
                         
                 }
@@ -400,7 +382,6 @@ public class matriks
                                 utama=1+k;
                                 for (i=1+k;i<=NBrsEff;i++)
                                 {
-                                        System.out.println("www"+utama);
                                         if (i==utama)
                                         //saat baris ke i mula2
                                         {
@@ -410,7 +391,6 @@ public class matriks
                                                 //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
                                                 {
                                                         OBEtukar(IdxKolom1(i+k,j),i+k);
-                                                        System.out.println("swap obe"+utama+":"+j);
                                                         
                                                 }  
                                                 
@@ -427,22 +407,18 @@ public class matriks
                                                                         if ((utama+w)!=NBrsEff)
                                                                         {
                                                                                 keluar=true;
-                                                                                System.out.println("keluar deh acu");
                                                                                 
                                                                         }
                                                                         else
                                                                         {
                                                                                 OBEtukar(utama+w,i+k);
-                                                                                System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 if(mem[i+k][j]==0)
                                                                                 {
                                                                                         OBEtukar(utama+w,i+k);
-                                                                                        System.out.println("swap obe dptnya 0"+utama+":"+j);
                                                                                 }
                                                                                 else
                                                                                 {
                                                                                         OBEUtama(utama,j);
-                                                                                        System.out.println("jadi utama obe udah bukan 0"+utama+":"+j);
                                                                                 }
                                                                         }
                                                                 }
@@ -451,10 +427,6 @@ public class matriks
                                                         {
 
                                                                 OBEUtama(utama,j);
-                                                                System.out.println(mem[utama][j]);
-                                                                System.out.println("jadi utama obe"+utama+":"+j);
-
-
                                                         }
                                                       
                                                  }
@@ -467,7 +439,6 @@ public class matriks
                                                 if ((mem[i][j]!=0 ))
                                                 {
                                                         OBEkurang(i,j,utama,j);
-                                                        System.out.println("kurang obe bkn utama"+utama+":"+j);
                                                 }
                                                                         
                                         }
@@ -476,17 +447,13 @@ public class matriks
                                 if (IsFound1Kolom(utama,j))
                                 {
                                         i=1;
-                                        System.out.println("utamanya berapa si "+utama+ "  i nya berapa"+i);
                                         while (i<utama)
                                         {
                                                 if ((mem[i][j]!=0 ))
                                                         {
                                                                 OBEkurang(i,j,utama,j);
-                                                                System.out.println("kurang obe bknnn utama"+utama+":"+j);
                                                         }  
                                                 i=i+1;
-
-                                                TulisMATRIKSAug();
                                         }
                                 }   
                                 
@@ -495,36 +462,37 @@ public class matriks
                         if (keluar==false)
                         {
                          k=k+1;
-                         System.out.println("www");
                         }
                         
                 }
 
         }
-        float Determinan ()
-        {
-                return 0;       
-        }
 
-        void CramerSPL()
+        void CramerSPL(matriks M)
         //MATRIKS Harus SINGULAR (n x n)
         //Matriks Augmentednya harus ( n x n+1 )
         {
                 
                 int j,i;
                 float det;
-                float[] solSPL= new float[NKolEff];
-                det= Determinan();
+                float[] solSPL= new float[NKolEff+1];
+                det= DeterminanKofaktor(M);
                 for (j=1;j<=NKolEff;j++)
                 {
                        for (i=1;i<=NBrsEff;i++)
                        {
-                               mem[i][j]=mem[i][NKolEff+1];
+                                float temp;
+                                temp=M.mem[(i)][(j)];
+                                M.mem[(i)][(j)]=mem[(i)][(NKolEff+1)];
+                                M.mem[(i)][(NKolEff+1)]=temp;
                        }
-                        solSPL[j]=Determinan()/det;
+                        solSPL[j]=(float)DeterminanKofaktor(M)/det;
                         for (i=1;i<=NBrsEff;i++)
                        {
-                               mem[i][j]=mem[i][NKolEff+1];
+                                float temp;
+                                temp=M.mem[(i)][(j)];
+                                M.mem[(i)][(j)]=mem[(i)][(NKolEff+1)];
+                                M.mem[(i)][(NKolEff+1)]=temp;
                        }
                        
                 }
@@ -538,12 +506,13 @@ public class matriks
         }
 
 
-        void InverseSPL ()
-        //MASUKKAN MATRIKS AUGMENTED YANG SUDAH DIINVERS NAMUN NEFF+1 MASI BERISIKAN SOLUSI SPLNYA
+        void InverseSPL (matriks a)
+        //MASUKKAN MATRIKS AUGMENTED ((YANG SUDAH DIINVERS))) NAMUN NEFF+1 MASI BERISIKAN SOLUSI SPLNYA
         {
+                matriks M = InversMatriks(a);
                 int i,j,k;
                 float elmt;
-                float [] solInvers = new float[NBrsEff];
+                float [] solInvers = new float[NBrsEff+1];
                 for (i=1;i<=NBrsEff;i++)
                 {
                         j=NKolEff+1;
@@ -551,7 +520,7 @@ public class matriks
                         elmt=0;
                         for (k=1;k<=NKolEff;k++)
                         {
-                                elmt=elmt+mem[i][k]*mem[k][j];
+                                elmt=elmt+M.mem[i][k]*M.mem[k][j];
                         }
                         solInvers[i] = elmt;
                         }
@@ -562,6 +531,37 @@ public class matriks
                 {
                         System.out.println("x"+j+"= "+solInvers[j]);
                 }
+        }
+        
+        void Interpolasi ()
+        {
+                float input1, input2,x,sum;
+                sum=0;
+                System.out.println("Masukkan banyaknya titik : ");
+                NKolEff=sc.nextInt();
+                MakeMATRIKS(NKolEff,NKolEff);
+                int i,j;
+                for (i=1;i<=NBrsEff;i++)
+                {
+                        input1 = sc.nextFloat();
+                        for (j=1;j<=NKolEff;j++)
+                        {
+                                mem[i][j]=(float)Math.pow(input1,j-1);
+                        }
+                        input2 = sc.nextFloat();
+                        mem[i][NKolEff+1]=input2;
+                       
+                }
+                TulisMATRIKSAug();
+                GaussJordan();
+                System.out.println("Masukkan x : ");
+                x=sc.nextFloat();
+
+                for(i=1;i<=NBrsEff;i++)
+                {
+                        sum=sum+mem[i][NKolEff+1]*(float)Math.pow(x,i-1);
+                }
+                System.out.println("Hasil interpolasinya : "+sum);
         }
 
         float DeterminanKofaktor (matriks M) {
@@ -846,7 +846,10 @@ public class matriks
 
                 matriks M = new matriks ();
                 M.BacaMATRIKSAug(brs,kol);
-                M.GaussSPL();
+                
+                M.InverseSPL(M);
+                M.InversMatriks(M);
+                M.TulisMATRIKSAug();
                 M.TulisMATRIKSAug();
                 M.SolusiSPL(M);
                 sc.close();
