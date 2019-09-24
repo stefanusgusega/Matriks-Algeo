@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class matriks
 {
@@ -837,20 +839,60 @@ public class matriks
                         }
         public static void main (String[] args)
         {
-                int brs,kol;
-                Scanner sc = new Scanner(System.in); 
-                System.out.println("Baris :");
-                brs = sc.nextInt();
-                System.out.println("Kolom :");
-                kol = sc.nextInt();
+               //Baca file ekstern
+                        //Membuat Statement Try-Catch untuk mengatasi error jika file tidak ditemuan
+                        
+                        int brs,kol;
+                        Scanner sc = new Scanner(System.in); 
+                        System.out.println("Baris :");
+                        brs = sc.nextInt();
+                        System.out.println("Kolom :");
+                        kol = sc.nextInt();
+                        matriks M = new matriks ();
 
-                matriks M = new matriks ();
+                        M.MakeMATRIKS(brs,kol-1);
+                        int i,j;
+                                                 
+                        try
+                        {
+                        
+                                //Inisialisasi Objek dan Mendefinisikan Path Lokasi File Yang akan Dibaca
+                                File file = new File("contohfileeks.txt");
+                                
+                                //Inisialisasi Objek Scanner dan memasang objek file yang akan dibaca
+                                Scanner scan = new Scanner(file);
+                                
+                                //Menggunakan perulangan untuk membaca semua data didalam objek Scanner
+                                while(scan.hasNextFloat())
+                                {
+                                        for (i=1;i<=brs;i++)
+                                        {
+                                                for (j=1;j<=kol;j++)
+                                                {
+                                                        float getData = scan.nextFloat();
+                                                        M.mem[i][j]=getData;
+                                                }
+                                        }
+                                }
+                        
+                                scan.close();
+                        }
+                        
+                        catch(FileNotFoundException ex)
+                        {
+                                System.out.println("File Tidak Ditemukan"); 
+                        }
+        
+        
+                M.TulisMATRIKSAug();
+                System.out.println("--------------------------------------------");
+                              
                 M.BacaMATRIKSAug(brs,kol);
                 
                 M.InverseSPL(M);
                 M.InversMatriks(M);
                 M.TulisMATRIKSAug();
-                M.TulisMATRIKSAug();
+                
                 M.SolusiSPL(M);
                 sc.close();
     }
