@@ -567,27 +567,38 @@ public class matriks
         }
 
         float DeterminanKofaktor (matriks M) {
-                int i,j;
+                int j;
+                float det = 0;
                 // ALGORITMA //
-                if (M.NBrsEff == 2) {
-                        return (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
+                if (M.NBrsEff == 1) {
+                        det = (M.mem[1][1]);
+                }
+                else if (M.NBrsEff == 2) {
+                        det = (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
                 }
                 else {
                         matriks MKof = new matriks();
                         MKof.MakeMATRIKS(NBrsEff-1, NKolEff-1);
-                        float det = 0;
-                        i = 1;
+                        int tanda = 1;
                         for (j=1; j<=NKolEff; j++) {
                                 for (int k=2; k<=NBrsEff; k++) {
                                         for (int l=1; l<=NKolEff; l++) {
-                                                if (j<l) {
-                                                        return 0;
+                                                if (j!=l) {
+                                                        if (l<j) {
+                                                                MKof.mem[k-1][l] = M.mem[k][l];                
+                                                        }
+                                                        else {
+                                                                MKof.mem[k-1][l-1] = M.mem[k][l];
+                                                        }
                                                 }
+                                                
                                         }
                                 }
                         }
-                        return 0;
+                        det += tanda*M.mem[1][j]*DeterminanKofaktor(MKof);
+                        tanda *= -1;
                 }
+                return det;
         }
 
         matriks TransposeMatriks(matriks M) {
@@ -889,10 +900,11 @@ public class matriks
                               
                 M.BacaMATRIKSAug(brs,kol);
                 
-                M.InverseSPL(M);
-                M.InversMatriks(M);
+               /* M.InverseSPL(M);
+                M.InversMatriks(M); */
+                M.GaussSPL();
                 M.TulisMATRIKSAug();
-                
+                System.out.println("Determinan :" + M.DeterminanKofaktor(M));
                 M.SolusiSPL(M);
                 sc.close();
     }
