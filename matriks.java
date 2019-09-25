@@ -650,7 +650,53 @@ public class matriks
                 System.out.println(det);
                }
                void DeterminanGaussJordan (matriks M) {
-                        
+                boolean IsFoundNot0;
+                int i;
+                float temp,sign,det; 
+                sign = 1;
+                i = 1;
+                // membuat Elmt(1,1),(2,2),(3,3) dst ngga 0
+                for (int j = 1; j<=M.NKolEff; j++) {
+                        IsFoundNot0 = false;
+                        while (IsFoundNot0 == false && i<=M.NBrsEff) {
+                                if (M.mem[i][j]!=0) {
+                                        IsFoundNot0 = true;
+                                }
+                                i += 1;
+                        }
+                        i-=1;
+                        // tukar baris
+                        if (IsFoundNot0) {
+                                if (i>j) {
+                                         for (int k=1;k<=M.NKolEff;k++) {
+                                                 temp = M.mem[i][k];
+                                                 M.mem[i][k]=M.mem[j][k];
+                                                 M.mem[j][k] = temp;
+                                         }
+                                         sign*=-1;
+                                }
+                                 }
+                         // untuk kolom ke-1 dibuat setelah baris j jd 0 semua (Gauss)
+                         for (int l=1;l<=M.NBrsEff;l++) {
+                                        for (int m=M.NKolEff;m>=1;m--) {
+                                                M.mem[l][m] -= (M.mem[l][j]/M.mem[j][j])*M.mem[j][m];
+                                        }
+                                 
+
+                         }
+                         // dibuat segitiga 0 di atas
+                         
+                         i = j+1;
+                }
+                det = 1*sign;
+                for (int n=1;n<=M.NBrsEff;n++) {
+                        det*=M.mem[n][n];
+                }
+                if (det==-0.0) {
+                        det*=-1;
+                }
+                M.TulisMATRIKS();
+                System.out.println(det);
                }
                void DeterminanInvers (matriks M) {
 
@@ -958,7 +1004,7 @@ public class matriks
                 M.InversMatriks(M); */
                 /*M.GaussSPL();
                 M.TulisMATRIKSAug();*/
-                M.DeterminanGauss(M);
+                M.DeterminanGaussJordan(M);
                 M.SolusiSPL(M);
                 sc.close();
     }
