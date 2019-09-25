@@ -111,60 +111,281 @@ public class matriks
 			System.out.println();
 		}
         }
- /* 
-        void SolusiSPL (int NBrsAug, int NKolAug, matriks M) 
-         Kol masukan adalah kolom AUGMENTED 
+
+        boolean AdaBukanSolSPL (matriks m)
+        {
+                int i;
+                for (i=m.NBrsEff;i>=1;i--)
+                {
+                        if ((IsKirinya0semua (m, i, m.NKolEff+1))&&m.mem[i][m.NKolEff+1]!=0)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+        int IdxBrsSebelum0semua(matriks m)
         {
                 int i,j;
-                char[] alph = new char[]{'t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'};
-                float[] solSPL= new float[NKolAug-1];
-                matriks koef = new matriks();
-                koef.MakeMATRIKS(NKolAug-1,NKolAug-1);
-                for (i=NBrsAug; i>=1; i--)
+                for (i=m.NBrsEff;i>=1;i--)
                 {
-                        
-                        if ((SumIdxFoundNonZero(i)==0)&&(M.mem[i][NKolAug]!=0))
+                        for (j=1;j<=m.NKolEff+1;j++)
                         {
-                                System.out.println("Tidak ada solusi SPLnya\n");
-                                break;
-                        }
-                        else if ((SumIdxFoundNonZero(i)==1))
-                        {
-                                for (j=1;j<=NKolEff-1;j++)
+                                if (m.mem[i][j]!=0)
                                 {
-                                        if(M.mem[i][j]!=0)
-                                        {
-                                                solSPL[j]=M.mem[i][j];
-                                        }
+                                        return i;
                                 }
                         }
-                        else if ((SumIdxFoundNonZero(i)>1))
+                }
+                System.out.println("MATRIKS KOSONG!!!\n");
+                return i;
+
+        }
+
+
+        void SolSPLAkhir(matriks m)
+        {
+                int i,j,w,ha;
+                ha=0;
+                w=1;
+                matriks koef = new matriks();
+                char[] alph = new char[]{'w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'};
+                koef.MakeMATRIKS(m.NBrsEff,m.NKolEff);
+                int a= IdxBrsSebelum0semua(m);
+                if (AdaBukanSolSPL(m))
+                {
+                        System.out.println("Tidak ada solusi SPL\n");
+                }
+                else {
+                for (i=a-1; i>=1; i--)
+                {   
+                        for (j=m.NKolEff;j>=1;j--)
                         {
-                                for (j=NKolEff-1;j>=1;j--)
+                                if ((m.mem[IdXPalingBawah(m,j)][j]==1)&&(!(IsSatuUtama(m,i,j)))&&(i<IdXPalingBawah(m,j)))
                                 {
-                                        if(M.mem[i][j]!=0)
-                                        {
-                                               if (!IsSebelumnyaada(M,i,j))
-                                               {
-                                               solSPL[j]= ((float)M.mem[i][NKolAug]/M.Mem[i][j];
-                                               }
-                                               else if (IsSebelumnyaada(M,i,j))
-                                               {
-                                                       koef[j][j]=1;
-                                               }
-                                        }
-
-
+                                        DiRekursifin(m,i,j);
                                 }
                         }
+                }
+
+                int k;
+                k=1;
+                float simp;
+                String str1,str2;
+                for (j=m.NKolEff;j>=1;j--)
+                {
+                        ha=1;
+                        if (IsSatuUtama(m,IdXPalingBawah(m,j),j))
+                        {
+                                System.out.print("x"+j+" = ");
+                                
+                                if (((j+1)!=m.NKolEff+1) && (m.mem[IdXPalingBawah(m,j)][j+1]!=0))
+                                {        simp = m.mem[IdXPalingBawah(m,j)][j+1]*(-1);
+                                        str1=String.valueOf(simp);
+                                        str2 = String.valueOf(alph[j+1]);
+                                        System.out.print(str1+str2);
+                                        ha++;
+                                }
+                                else if(((j+1)==m.NKolEff+1) && (m.mem[IdXPalingBawah(m,j)][j+1]!=0))
+                                {
+                                        simp = m.mem[IdXPalingBawah(m,j)][j+1];
+                                        str1=String.valueOf(simp);
+                                        System.out.print(str1);
+                                        ha++;
+                                }
+                                        
+                                k=j+2;
+                                while (k<=m.NKolEff+1)
+                                {
+                                        
+                                        
+                                        if((m.mem[IdXPalingBawah(m,j)][k]*(-1))>0)
+                                        {
+                                                if ((k)!=m.NKolEff+1) 
+                                                {
+                                                        simp = m.mem[IdXPalingBawah(m,j)][k]*(-1);
+                                                        str1=String.valueOf(simp);
+                                                        str2 = String.valueOf(alph[k]);
+                                                        if (ha!=1)
+                                                        {
+                                                                System.out.print("+"+str1+str2);
+                                                                ha++;
+                                                        }
+                                                        else
+                                                        {
+                                                                System.out.print(str1+str2);
+                                                                ha++;
+                                                        }
+                                                        
+                                                }
+                                                else
+                                                {
+                                                        simp = m.mem[IdXPalingBawah(m,j)][k];
+                                                        str1=String.valueOf(simp);
+                                                        if (m.mem[IdXPalingBawah(m,j)][k]>0)
+                                                        {
+                                                                if (ha!=1)
+                                                                {
+                                                                        System.out.print("+"+str1);
+                                                                        ha++;
+                                                                }
+                                                                else
+                                                                {
+                                                                        System.out.print(str1);
+                                                                        ha++;
+                                                                }
+                                                        }
+                                                        else
+                                                        {
+                                                                System.out.print(str1);
+                                                        }
+                                                }
+                                        }
+                                        else if((m.mem[IdXPalingBawah(m,j)][k]*(-1))<0)
+                                        {
+                                                if ((k)!=m.NKolEff+1) 
+                                                {
+                                                        simp = m.mem[IdXPalingBawah(m,j)][k]*(-1);
+                                                        str1=String.valueOf(simp);
+                                                        str2 = String.valueOf(alph[k]);
                         
+                                                        System.out.print(str1+str2);
+                                                        ha++;
+                                                }
+                                                else
+                                                {
+                                                        simp = m.mem[IdXPalingBawah(m,j)][k];
+                                                        str1=String.valueOf(simp);
+                                                        if (m.mem[IdXPalingBawah(m,j)][k]>0)
+                                                        {
+                                                                if (ha!=1)
+                                                                {
+                                                                        System.out.print("+"+str1);
+                                                                        ha++;
+                                                                }
+                                                                else
+                                                                {
+                                                                        System.out.print(str1);
+                                                                        ha++;
+                                                                }
+                                                        }
+                                                        else
+                                                        {
+                                                                System.out.print(str1);
+                                                                ha++;
+                                                        }
+                                                }
+                                        }
+                                        else
+                                        {
+                                                simp = m.mem[IdXPalingBawah(m,j)][k];
+                                                str1=String.valueOf(simp);
+                                                if (m.mem[IdXPalingBawah(m,j)][k]==0)
+                                                {
+                                                        if (ha==1)
+                                                        {
+                                                                System.out.print(0);
+                                                                ha++;
+                                                        }
+                                                        
+                                                }
+                                        }
+                                                
+                                        
+                                k++;
+                                 
+                                }
+                                
+                                
+                                System.out.println();
+                        }
+                        else if ((!IsSatuUtama(m,IdXPalingBawah(m,j),j)))
+                        {
+
+                                System.out.print("x"+j+" = "+alph[j]);
+                                System.out.println();
+                        }
+
+                        m.TulisMATRIKSAug();
+                }
+                
+        }
+        }
+        void DiRekursifin (matriks m, int acbar, int ackol)
+        {
+                int i,j;
+                float ac;
+                ac=m.mem[acbar][ackol];
+                i=IdXPalingBawah(m,ackol);
+                if (acbar!=m.NBrsEff)
+                {
+                        for (j=ackol+1;j<=m.NKolEff+1;j++)
+                        {
+                                m.mem[acbar][j]=m.mem[acbar][j]-(m.mem[i][j]*ac);
+                        }
+                        m.mem[acbar][ackol]=0;
                 }
         }
-        boolean IsSebelumnyaada (matriks m, int i, int j)
+
+   
+
+        int IdXPalingBawah (matriks m, int kol)
         {
-                return (m.mem[i][i-1]!=0);
+                int i;
+                for (i=1;i<=m.NBrsEff;i++)
+                {
+                        if ((m.mem[i][kol]==0)&&(IsBawahnya0semua(m,i,kol))&&(IsKirinya0semua(m,i,kol)))
+                        {
+                                return i-1;
+                        }
+                }
+                return i-1;
         }
-*/
+        boolean IsSatuUtama (matriks m, int bar, int kol)
+        {
+                return ((m.mem[bar][kol]==1)&&(IsBawahnya0semua(m,bar,kol)&&IsKirinya0semua(m,bar,kol)));
+        }
+
+        boolean IsBawahnya0semua(matriks m, int bar, int kol)
+        {
+                int i;
+                if (bar!=m.NBrsEff)
+                {
+                        for (i=bar+1;i<=m.NBrsEff;i++)
+                        {
+                                if (m.mem[i][kol]!=0)
+                                {
+                                        return false;
+                                }
+                        }
+                        return true;
+                }
+                else
+                {
+                        return true;
+                }
+        }
+
+        boolean IsKirinya0semua (matriks m, int bar, int kol)
+        {
+                int j;
+                if (kol!=1)
+                {
+                        for (j=1;j<kol;j++)
+                        {
+                                if (m.mem[bar][j]!=0)
+                                {
+                                        return false;
+                                }
+                        }
+                        return true;
+                }
+                else
+                {
+                        return true;
+                }
+        }
+ 
         int SumIdxFoundNonZero (int acbar)
         {
                 
@@ -339,7 +560,6 @@ public class matriks
                                                         {
 
                                                                 OBEUtama(utama,j);
-                                                                System.out.println(mem[utama][j]);
 
 
                                                         }
@@ -479,21 +699,24 @@ public class matriks
                 float det;
                 float[] solSPL= new float[NKolEff+1];
                 det= DeterminanKofaktor(M);
+                System.out.println(det);
                 for (j=1;j<=NKolEff;j++)
                 {
                        for (i=1;i<=NBrsEff;i++)
                        {
                                 float temp;
                                 temp=M.mem[(i)][(j)];
-                                M.mem[(i)][(j)]=mem[(i)][(NKolEff+1)];
+                                M.mem[(i)][(j)]=M.mem[(i)][(NKolEff+1)];
                                 M.mem[(i)][(NKolEff+1)]=temp;
                        }
+                       M.TulisMATRIKSAug();
                         solSPL[j]=(float)DeterminanKofaktor(M)/det;
+                        System.out.println(DeterminanKofaktor(M));
                         for (i=1;i<=NBrsEff;i++)
                        {
                                 float temp;
                                 temp=M.mem[(i)][(j)];
-                                M.mem[(i)][(j)]=mem[(i)][(NKolEff+1)];
+                                M.mem[(i)][(j)]=M.mem[(i)][(NKolEff+1)];
                                 M.mem[(i)][(NKolEff+1)]=temp;
                        }
                        
@@ -511,7 +734,17 @@ public class matriks
         void InverseSPL (matriks a)
         //MASUKKAN MATRIKS AUGMENTED ((YANG SUDAH DIINVERS))) NAMUN NEFF+1 MASI BERISIKAN SOLUSI SPLNYA
         {
+                if (a.NBrsEff!=a.NKolEff)
+                {
+                        System.out.println("Matriks augmented masukkan harus berisi n x n+1 ya ~~");
+                }
+                else if (DeterminanKofaktor(a)==0)
+                {
+                        System.out.println("Maaf ya.. Matriks augmented tidak ada solusi SPLnya karena ngga ada inversnya ~");
+                }
+                else{
                 matriks M = InversMatriks(a);
+                M.TulisMATRIKS();
                 int i,j,k;
                 float elmt;
                 float [] solInvers = new float[NBrsEff+1];
@@ -522,7 +755,7 @@ public class matriks
                         elmt=0;
                         for (k=1;k<=NKolEff;k++)
                         {
-                                elmt=elmt+M.mem[i][k]*M.mem[k][j];
+                                elmt=elmt+M.mem[i][k]*a.mem[k][j];
                         }
                         solInvers[i] = elmt;
                         }
@@ -533,6 +766,7 @@ public class matriks
                 {
                         System.out.println("x"+j+"= "+solInvers[j]);
                 }
+        }
         }
         
         void Interpolasi ()
@@ -567,28 +801,145 @@ public class matriks
         }
 
         float DeterminanKofaktor (matriks M) {
-                int i,j;
+                int j;
+                float det = 0;
                 // ALGORITMA //
-                if (M.NBrsEff == 2) {
-                        return (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
+                if (M.NBrsEff == 1) {
+                        det = (M.mem[1][1]);
+                }
+                else if (M.NBrsEff == 2) {
+                        det = (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
                 }
                 else {
                         matriks MKof = new matriks();
                         MKof.MakeMATRIKS(NBrsEff-1, NKolEff-1);
-                        float det = 0;
-                        i = 1;
+                        int tanda = 1;
                         for (j=1; j<=NKolEff; j++) {
                                 for (int k=2; k<=NBrsEff; k++) {
                                         for (int l=1; l<=NKolEff; l++) {
-                                                if (j<l) {
-                                                        return 0;
+                                                if (j!=l) {
+                                                        if (l<j) {
+                                                                MKof.mem[k-1][l] = M.mem[k][l];                
+                                                        }
+                                                        else {
+                                                                MKof.mem[k-1][l-1] = M.mem[k][l];
+                                                        }
                                                 }
+
                                         }
                                 }
                         }
-                        return 0;
+                        det += tanda*M.mem[1][j]*DeterminanKofaktor(MKof);
+                        tanda *= -1;
                 }
+                return det;
         }
+
+        void DeterminanGauss (matriks M) {
+                // KAMUS LOKAL //
+                boolean IsFoundNot0;
+                int i;
+                float temp,sign,det; 
+                sign = 1;
+                i = 1;
+                // membuat Elmt(1,1),(2,2),(3,3) dst ngga 0
+                for (int j = 1; j<=M.NKolEff; j++) {
+                        IsFoundNot0 = false;
+                        while (IsFoundNot0 == false && i<=M.NBrsEff) {
+                                if (M.mem[i][j]!=0) {
+                                        IsFoundNot0 = true;
+                                }
+                                i += 1;
+                        }
+                        i-=1;
+                        // tukar baris
+                        if (IsFoundNot0) {
+                                if (i>j) {
+                                         for (int k=1;k<=M.NKolEff;k++) {
+                                                 temp = M.mem[i][k];
+                                                 M.mem[i][k]=M.mem[j][k];
+                                                 M.mem[j][k] = temp;
+                                         }
+                                         sign*=-1;
+                                }
+                                 }
+                         // untuk kolom ke-1 dibuat setelah baris j jd 0 semua
+                         for (int l=j+1;l<=M.NBrsEff;l++) {
+                                 for (int m=M.NKolEff;m>=1;m--) {
+                                         M.mem[l][m] -= (M.mem[l][j]/M.mem[j][j])*M.mem[j][m];
+                                 }
+
+                         }
+                         i = j+1;
+                }
+                det = 1*sign;
+                for (int n=1;n<=M.NBrsEff;n++) {
+                        det*=M.mem[n][n];
+                }
+                if (det==-0.0) {
+                        det*=-1;
+                }
+                M.TulisMATRIKS();
+                System.out.println(det);
+               }
+               
+        void DeterminanGaussJordan (matriks M) {
+
+                boolean IsFoundNot0;
+                int i;
+                float temp,sign,det; 
+                sign = 1;
+                i = 1;
+                // membuat Elmt(1,1),(2,2),(3,3) dst ngga 0
+                for (int j = 1; j<=M.NKolEff; j++) {
+                        IsFoundNot0 = false;
+                        while (IsFoundNot0 == false && i<=M.NBrsEff) {
+                                if (M.mem[i][j]!=0) {
+                                        IsFoundNot0 = true;
+                                }
+                                i += 1;
+                        }
+                        i-=1;
+                        // tukar baris
+                        if (IsFoundNot0) {
+                                if (i>j) {
+                                         for (int k=1;k<=M.NKolEff;k++) {
+                                                 temp = M.mem[i][k];
+                                                 M.mem[i][k]=M.mem[j][k];
+                                                 M.mem[j][k] = temp;
+                                         }
+                                         sign*=-1;
+                                }
+                                 }
+                         // untuk kolom ke-1 dibuat setelah baris j jd 0 semua (Gauss)
+                         for (int l=1;l<=M.NBrsEff;l++) {
+                                        for (int m=M.NKolEff;m>=1;m--) {
+                                                M.mem[l][m] -= (M.mem[l][j]/M.mem[j][j])*M.mem[j][m];
+                                        }
+
+
+                         }
+                         // dibuat segitiga 0 di atas
+
+                         i = j+1;
+                }
+                det = 1*sign;
+                for (int n=1;n<=M.NBrsEff;n++) {
+                        det*=M.mem[n][n];
+                }
+                if (det==-0.0) {
+                        det*=-1;
+                }
+                M.TulisMATRIKS();
+                System.out.println(det);
+               }
+
+
+        void DeterminanInvers (matriks M) {
+                float det;        
+                det = 1/(M.DeterminanKofaktor(M));
+                System.out.println("Determinan : "+det);
+               }
 
         matriks TransposeMatriks(matriks M) {
                 int i, j;
@@ -829,8 +1180,11 @@ public class matriks
                                         if (l==2) {
                                                 System.out.print("x"+1+" = "+MAug.mem[l-1][NKolEff+1]);
                                                 for (int c=Idx1Atas+1;c<=MAug.NKolEff;c++) {
+
+                                                        
                                                         System.out.print("+("+(-1)*MAug.mem[l-1][c]+simpanchar[c]+")");
                                                 }
+
                                                 System.out.println();
                                         }
                                 }
@@ -849,7 +1203,7 @@ public class matriks
                         System.out.println("Kolom :");
                         kol = sc.nextInt();
                         matriks M = new matriks ();
-
+                        /*
                         M.MakeMATRIKS(brs,kol-1);
                         int i,j;
                                                  
@@ -880,20 +1234,17 @@ public class matriks
                         
                         catch(FileNotFoundException ex)
                         {
-                                System.out.println("File Tidak Ditemukan"); 
+                                System.out.println("File Tidak Ditemukan\n"); 
                         }
         
         
                 M.TulisMATRIKSAug();
-                System.out.println("--------------------------------------------");
+                System.out.println("--------------------------------------------");*/
                               
                 M.BacaMATRIKSAug(brs,kol);
+                M.CramerSPL(M);
                 
                 M.InverseSPL(M);
-                M.InversMatriks(M);
-                M.TulisMATRIKSAug();
-                
-                M.SolusiSPL(M);
                 sc.close();
     }
 }
