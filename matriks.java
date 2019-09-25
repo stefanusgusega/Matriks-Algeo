@@ -567,40 +567,94 @@ public class matriks
         }
 
         float DeterminanKofaktor (matriks M) {
+                 // kalo ga persegi menghasilkan det undef = -9999 
                 int j;
                 float det = 0;
                 // ALGORITMA //
-                if (M.NBrsEff == 1) {
-                        det = (M.mem[1][1]);
-                }
-                else if (M.NBrsEff == 2) {
-                        det = (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
-                }
-                else {
-                        matriks MKof = new matriks();
-                        MKof.MakeMATRIKS(NBrsEff-1, NKolEff-1);
-                        int tanda = 1;
-                        for (j=1; j<=NKolEff; j++) {
-                                for (int k=2; k<=NBrsEff; k++) {
-                                        for (int l=1; l<=NKolEff; l++) {
-                                                if (j!=l) {
-                                                        if (l<j) {
-                                                                MKof.mem[k-1][l] = M.mem[k][l];                
+                        if (M.NBrsEff == 1) {
+                                det = (M.mem[1][1]);
+                        }
+                        else if (M.NBrsEff == 2) {
+                                det = (M.mem[1][1]*M.mem[2][2]-M.mem[1][2]*M.mem[2][1]);
+                        }
+                        else {
+                                matriks MKof = new matriks();
+                                MKof.MakeMATRIKS(NBrsEff-1, NKolEff-1);
+                                int tanda = 1;
+                                for (j=1; j<=NKolEff; j++) {
+                                        for (int k=2; k<=NBrsEff; k++) {
+                                                for (int l=1; l<=NKolEff; l++) {
+                                                        if (j!=l) {
+                                                                if (l<j) {
+                                                                        MKof.mem[k-1][l] = M.mem[k][l];                
+                                                                }
+                                                                else {
+                                                                        MKof.mem[k-1][l-1] = M.mem[k][l];
+                                                                }
                                                         }
-                                                        else {
-                                                                MKof.mem[k-1][l-1] = M.mem[k][l];
-                                                        }
+                                                        
                                                 }
-                                                
                                         }
                                 }
-                        }
-                        det += tanda*M.mem[1][j]*DeterminanKofaktor(MKof);
-                        tanda *= -1;
+                                det += tanda*M.mem[1][j]*DeterminanKofaktor(MKof);
+                                tanda *= -1;
                 }
                 return det;
         }
 
+        void DeterminanGauss (matriks M) {
+                // KAMUS LOKAL //
+                boolean IsFoundNot0;
+                int i;
+                float temp,sign,det; 
+                sign = 1;
+                i = 1;
+                // membuat Elmt(1,1),(2,2),(3,3) dst ngga 0
+                for (int j = 1; j<=M.NKolEff; j++) {
+                        IsFoundNot0 = false;
+                        while (IsFoundNot0 == false && i<=M.NBrsEff) {
+                                if (M.mem[i][j]!=0) {
+                                        IsFoundNot0 = true;
+                                }
+                                i += 1;
+                        }
+                        i-=1;
+                        // tukar baris
+                        if (IsFoundNot0) {
+                                if (i>j) {
+                                         for (int k=1;k<=M.NKolEff;k++) {
+                                                 temp = M.mem[i][k];
+                                                 M.mem[i][k]=M.mem[j][k];
+                                                 M.mem[j][k] = temp;
+                                         }
+                                         sign*=-1;
+                                }
+                                 }
+                         // untuk kolom ke-1 dibuat setelah baris j jd 0 semua
+                         for (int l=j+1;l<=M.NBrsEff;l++) {
+                                 for (int m=M.NKolEff;m>=1;m--) {
+                                         M.mem[l][m] -= (M.mem[l][j]/M.mem[j][j])*M.mem[j][m];
+                                 }
+
+                         }
+                         i = j+1;
+                }
+                det = 1*sign;
+                for (int n=1;n<=M.NBrsEff;n++) {
+                        det*=M.mem[n][n];
+                }
+                if (det==-0.0) {
+                        det*=-1;
+                }
+                M.TulisMATRIKS();
+                System.out.println(det);
+               }
+               void DeterminanGaussJordan (matriks M) {
+                        
+               }
+               void DeterminanInvers (matriks M) {
+
+               }
         matriks TransposeMatriks(matriks M) {
                 int i, j;
                 matriks hasil = new matriks();
@@ -862,7 +916,7 @@ public class matriks
                         matriks M = new matriks ();
 
                         M.MakeMATRIKS(brs,kol-1);
-                        int i,j;
+                        /*int i,j;
                                                  
                         try
                         {
@@ -893,18 +947,18 @@ public class matriks
                         {
                                 System.out.println("File Tidak Ditemukan"); 
                         }
-        
+                        */
         
                 M.TulisMATRIKSAug();
                 System.out.println("--------------------------------------------");
                               
-                M.BacaMATRIKSAug(brs,kol);
+                M.BacaMATRIKS(brs,kol);
                 
                /* M.InverseSPL(M);
                 M.InversMatriks(M); */
-                M.GaussSPL();
-                M.TulisMATRIKSAug();
-                System.out.println("Determinan :" + M.DeterminanKofaktor(M));
+                /*M.GaussSPL();
+                M.TulisMATRIKSAug();*/
+                M.DeterminanGauss(M);
                 M.SolusiSPL(M);
                 sc.close();
     }
