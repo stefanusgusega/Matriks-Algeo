@@ -677,7 +677,7 @@ public class matriks
                                 }
                                  }
                          // untuk kolom ke-1 dibuat setelah baris j jd 0 semua (Gauss)
-                         for (int l=1;l<=M.NBrsEff;l++) {
+                         for (int l=j+1;l<=M.NBrsEff;l++) {
                                         for (int m=M.NKolEff;m>=1;m--) {
                                                 M.mem[l][m] -= (M.mem[l][j]/M.mem[j][j])*M.mem[j][m];
                                         }
@@ -685,7 +685,11 @@ public class matriks
 
                          }
                          // dibuat segitiga 0 di atas
-                         
+                         for (int n=j-1;n>=1;n--) {
+                                 for (int m=M.NKolEff;m>=1;m--) {
+                                         M.mem[n][m] -= (M.mem[n][j]/M.mem[j][j])*M.mem[j][m];
+                                 }
+                         }
                          i = j+1;
                 }
                 det = 1*sign;
@@ -699,7 +703,9 @@ public class matriks
                 System.out.println(det);
                }
                void DeterminanInvers (matriks M) {
-
+                float det;        
+                det = 1/(M.DeterminanKofaktor(M));
+                System.out.println("Determinan : "+det);
                }
         matriks TransposeMatriks(matriks M) {
                 int i, j;
