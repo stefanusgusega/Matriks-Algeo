@@ -1072,7 +1072,7 @@ public class matriks
 	matriks InversGaussJordan(matriks M) {
                 int i, j, k;
                 float faktor;
-                if (DeterminanKofaktor(M) == 0) {
+                if (DeterminanKofaktor(M) == 0.00) {
                         System.out.println("Matriks tidak punya balikan");
                         return M;
                 }
