@@ -1107,9 +1107,15 @@ public class matriks
 
 
 
-        void BacaFileEks (File file)
+        void BacaFileEks (matriks M,File file)
         {
-                M.MakeMATRIKS(brs,kol-1);
+                int brs,kol;
+                        Scanner sc = new Scanner(System.in); 
+                        System.out.println("Baris :");
+                        brs = sc.nextInt();
+                        System.out.println("Kolom :");
+                        kol = sc.nextInt();
+                        M.MakeMATRIKS(brs,kol-1);
                         int i,j;
                        
                         try
@@ -1168,7 +1174,6 @@ public class matriks
                 /*M.GaussSPL();
                 M.TulisMATRIKSAug();*/
                 M.DeterminanGaussJordan(M);
-                M.SolusiSPL(M);
                 sc.close();
     }
 }
