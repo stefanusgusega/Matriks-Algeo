@@ -1103,8 +1103,16 @@ public class matriks
                         return hasil;
                 }
         }
-
-
+	
+	float IsNotWithinEpsilon(float x) {
+		/* Mastiin bilangan ga di antara epsilon (10^-10) */
+                if ((x < 0.0000000001) && (x > -0.0000000001)) {
+                        return 0;
+                }
+                else {
+                        return x;
+                }
+        }
 
         void BacaFileEks (File file)
         {
