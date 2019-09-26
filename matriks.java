@@ -1,7 +1,24 @@
+
+package com.javatpoint;  
+import java.io.FileWriter;  
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+class FileWriterExample { 
+        public static void main (String[] args) {
+        void Save(float i){  
+                try{    
+                FileWriter fw=new FileWriter("Output.txt");    
+                String simp = String.valueOf(i);
+                fw.write(simp);    
+                fw.close();    
+                }catch(Exception e){System.out.println(e);}    
+                System.out.println("Yuhu~~ Suksess di save");    
+        }    
+        }  
+}
 
 public class matriks
 {
@@ -306,8 +323,6 @@ public class matriks
                                 System.out.print("x"+j+" = "+alph[j]);
                                 System.out.println();
                         }
-
-                        m.TulisMATRIKSAug();
                 }
                 
         }
@@ -762,7 +777,11 @@ public class matriks
                 else{
                 int  i,k;
                 matriks M= new matriks ();
+<<<<<<< HEAD
+                M.MakeMATRIKS(a.NBrsEff,a.NKolEff);
+=======
                 M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1);
+>>>>>>> 94dbdb96d26b2e156f6e89e20ae5af318c488f7d
                 for (i=1;i<=a.NBrsEff;i++)
                 {
                         for (k=1;k<=a.NKolEff;k++)
@@ -771,8 +790,12 @@ public class matriks
                         }
                 }
 
+<<<<<<< HEAD
+                (M.InversMatriks(M)).TulisMATRIKS();
+=======
                 M = InversMatriks(a);
                 M.TulisMATRIKS();
+>>>>>>> 94dbdb96d26b2e156f6e89e20ae5af318c488f7d
                 int j;
                 float elmt;
                 float [] solInvers = new float[NBrsEff+1];
@@ -1065,9 +1088,12 @@ public class matriks
                         }
                         for (j = 0; j < M.NKolEff - 1; j++) {
                                 for (i = j + 1; i < M.NBrsEff; i++) {
+<<<<<<< HEAD
+=======
 					if (Campuran.mem[j][j] == 0) {
 						OBEtukar(i, i+1);
 					}
+>>>>>>> 94dbdb96d26b2e156f6e89e20ae5af318c488f7d
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
@@ -1084,9 +1110,12 @@ public class matriks
                         }
                         for (j = Campuran.NKolEff - 1; j > 0; j--) {
                                 for (i = j - 1; i >= 0; i--) {
+<<<<<<< HEAD
+=======
                                         if (Campuran.mem[j][j] == 0) {
 						OBEtukar(i, i-1);
 					}
+>>>>>>> 94dbdb96d26b2e156f6e89e20ae5af318c488f7d
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
@@ -1184,6 +1213,9 @@ public class matriks
 
         public static void main (String[] args)
         {
+                FileWriterExample a = new FileWriterExample();
+                float i = (float)1.23;
+                a.Save(i);
                 matriks M = new matriks ();
                 int brs = 3;
                 System.out.println();
