@@ -1,24 +1,13 @@
-
-package com.javatpoint;  
-import java.io.FileWriter;  
+package com.javatutorialhq.java.examples;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException; 
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
-class FileWriterExample { 
-        public static void main (String[] args) {
-        void Save(float i){  
-                try{    
-                FileWriter fw=new FileWriter("Output.txt");    
-                String simp = String.valueOf(i);
-                fw.write(simp);    
-                fw.close();    
-                }catch(Exception e){System.out.println(e);}    
-                System.out.println("Yuhu~~ Suksess di save");    
-        }    
-        }  
-}
+
+
 
 public class matriks
 {
@@ -294,6 +283,7 @@ public class matriks
                                                         }
                                                 }
                                         }
+                                        /*
                                         else
                                         {
                                                 simp = m.mem[IdXPalingBawah(m,j)][k];
@@ -308,6 +298,7 @@ public class matriks
                                                         
                                                 }
                                         }
+                                        */
                                                 
                                         
                                 k++;
@@ -483,6 +474,18 @@ public class matriks
         {
                 int j;
                 for (j=1;j<=NKolEff+1;j++)
+                {
+                        float temp;
+                        temp=mem[(acbar)][(j)];
+                        mem[(acbar)][(j)]=mem[(bartukar)][(j)];
+                        mem[(bartukar)][(j)]=temp;
+                }
+        }
+
+        void OBEtukarInverse (int bartukar, int acbar)
+        {
+                int j;
+                for (j=1;j<=NKolEff*2;j++)
                 {
                         float temp;
                         temp=mem[(acbar)][(j)];
@@ -999,8 +1002,8 @@ public class matriks
         }
         
         matriks InversMatriks(matriks M) {
-                if (DeterminanKofaktor(M) != 0) {
-                        return KaliKons(AdjointMatriks(M), (1 / DeterminanKofaktor(M)));
+                if (M.DeterminanKofaktor(M) != 0) {
+                        return KaliKons(M.AdjointMatriks(M), (1 / M.DeterminanKofaktor(M)));
                 }
                 else {
                         System.out.println("Matriks tidak punya invers");
@@ -1030,7 +1033,7 @@ public class matriks
                                                 o = o + 1;
                                         }
                                 }
-                                KofaktorBesar.mem[i][j] = DeterminanKofaktor(Kofaktor) * sign;
+                                KofaktorBesar.mem[i][j] = M.DeterminanKofaktor(Kofaktor) * sign;
                                 sign = sign * -1;
                         }
                 }
@@ -1038,7 +1041,7 @@ public class matriks
         }
 
         matriks AdjointMatriks(matriks M) { // Membuat matriks adjoint
-                return TransposeMatriks(MakeKofaktor(M));
+                return M.TransposeMatriks(M.MakeKofaktor(M));
             }
         
         matriks KaliKons(matriks M, float x) { // Ngaliin matriks dengan konstanta
@@ -1056,7 +1059,7 @@ public class matriks
 	matriks InversGaussJordan(matriks M) {
                 int i, j, k;
                 float faktor;
-                if (DeterminanKofaktor(M) == 0) {
+                if (M.DeterminanKofaktor(M) == 0) {
                         System.out.println("Matriks tidak punya balikan");
                         return M;
                 }
@@ -1081,7 +1084,7 @@ public class matriks
                         for (j = 0; j < M.NKolEff - 1; j++) {
                                 for (i = j + 1; i < M.NBrsEff; i++) {
 					if (Campuran.mem[j][j] == 0) {
-						OBEtukar(i, i+1);
+						Campuran.OBEtukarInverse(i, i+1);
 					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
@@ -1100,7 +1103,7 @@ public class matriks
                         for (j = Campuran.NKolEff - 1; j > 0; j--) {
                                 for (i = j - 1; i >= 0; i--) {
                                         if (Campuran.mem[j][j] == 0) {
-						OBEtukar(i, i-1);
+						Campuran.OBEtukarInverse(i, i-1);
 					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
@@ -1230,7 +1233,7 @@ public class matriks
                                                 System.out.println("File Tidak Ditemukan\n"); 
                                         }
                         }
-                
+                       
                         void InputUserAug (matriks M)
                         {
                                 int brs,kol;
@@ -1256,22 +1259,21 @@ public class matriks
                         }
                 
                  
-                        void Save() throws IOException {
-                          String str = "Hello";
-                          FileOutputStream outputStream = new FileOutputStream(fileName);
-                          byte[] strToBytes = str.getBytes();
-                          outputStream.write(strToBytes);
-                          outputStream.close();
-                      }
                         public static void main (String[] args)
                         {
-                                FileWriterExample a = new FileWriterExample();
-                                float i = (float)1.23;
-                                a.Save(i);
+                                float i = (float)1.223;
+                                String j = String.valueOf(i);
+                                try (FileWriter writer = new FileWriter("text.txt");
+                                BufferedWriter bw = new BufferedWriter(writer)) {
+                   
+                               bw.write(j);
+                               bw.newLine();
+                               bw.write(j);
+                   
+                           } catch (IOException e) {
+                               System.err.format("IOException: %s%n", e);
+                           }                               
                                 matriks M = new matriks ();
                                 M.InputFileEksAug(M);
-                                M.InverseSPL(M);
-                                M.CramerSPL(M);
-                                M.InverseSPL(M);
                         }
                 }
