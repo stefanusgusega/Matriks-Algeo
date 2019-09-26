@@ -50,6 +50,13 @@ class MenuUtama {
                                 case 1:
                                 break;
                                 case 2:
+                                int brs,kol;
+                                matriks M = new matriks ()
+                                System.out.println("Baris :");
+                                brs = input.nextInt();
+                                System.out.println("Kolom :");
+                                kol = input.nextInt();
+                                
                                 break;
                             }
                             break;
