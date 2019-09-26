@@ -51,12 +51,15 @@ class MenuUtama {
                                 break;
                                 case 2:
                                 int brs,kol;
-                                matriks M = new matriks ()
+                                matriks M = new matriks();
                                 System.out.println("Baris :");
                                 brs = input.nextInt();
                                 System.out.println("Kolom :");
                                 kol = input.nextInt();
-                                
+                                M.MakeMATRIKS(brs, kol);
+                                M.BacaMATRIKSAug(brs, kol+1);
+                                System.out.println("Solusi :");
+                                M.SolSPLAkhir(M);
                                 break;
                             }
                             break;
