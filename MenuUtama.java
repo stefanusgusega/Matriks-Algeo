@@ -271,6 +271,13 @@ class MenuUtama {
                                 back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Determinan inversnya : "+M.DeterminanInvers(M));
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                             break;
