@@ -863,6 +863,22 @@ public class matriks
                 {
                         sum=sum+mem[i][NKolEff+1]*(float)Math.pow(x,i-1);
                 }
+                System.out.print("p(x) = "+mem[1][NKolEff+1]);
+                for(i=2;i<=NBrsEff;i++)
+                {
+                        if (mem[i][NKolEff+1]>=0)
+                        {
+                        System.out.print("+"+mem[i][NKolEff+1]+"x^"+(i-1));
+                }
+                        else
+                        {
+                                System.out.print("+"+mem[i][NKolEff+1]+"x^"+(i-1));       
+                        }
+                        
+                        sum=sum+mem[i][NKolEff+1]*(float)Math.pow(x,i-1);
+                }
+
+                System.out.println();
                 System.out.println("Hasil interpolasinya : "+sum);
                 SaveString("Hasil interpolasinya : ");
                 SaveFloat(sum);
