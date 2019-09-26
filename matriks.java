@@ -1000,7 +1000,7 @@ public class matriks
                                         p = 0;
                                         for (l = 0; l < M.NKolEff; l++) {
                                                 if (k != i && l != j) {
-                                                        Kofaktor.mem[o][p] = M.mem[k][l];
+                                                        Kofaktor.mem[o][p] = IsNotWithinEpsilon(M.mem[k][l]);
                                                         p = p + 1;
                                                 }
                                         }
@@ -1008,7 +1008,7 @@ public class matriks
                                                 o = o + 1;
                                         }
                                 }
-                                KofaktorBesar.mem[i][j] = DeterminanKofaktor(Kofaktor) * sign;
+                                KofaktorBesar.mem[i][j] = IsNotWithinEpsilon(DeterminanKofaktor(Kofaktor) * sign);
                                 sign = sign * -1;
                         }
                 }
@@ -1025,7 +1025,7 @@ public class matriks
                 hasil.MakeMATRIKS(M.NBrsEff, M.NKolEff);
                 for (i = 0; i < M.NBrsEff; i++) {
                     for (j = 0; j < M.NKolEff; j++) {
-                        hasil.mem[i][j] = M.mem[i][j] * x;
+                        hasil.mem[i][j] = IsNotWithinEpsilon(M.mem[i][j] * x);
                     }
                 }
                 return hasil;
@@ -1044,7 +1044,7 @@ public class matriks
                         for (i = 0; i < M.NBrsEff; i++) {
                                 for (j = 0; j < M.NKolEff * 2; j++) {
                                         if (j < M.NKolEff) {
-                                                Campuran.mem[i][j] = M.mem[i][j];
+                                                Campuran.mem[i][j] = IsNotWithinEpsilon(M.mem[i][j]);
                                         }
                                         else { // j >= MKolEff
                                                 if (i == j - M.NKolEff) {
@@ -1063,10 +1063,10 @@ public class matriks
                                                 matriks temp = new matriks();
                                                 temp.MakeMATRIKS(1, Campuran.NKolEff);
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        temp.mem[0][k] = faktor * Campuran.mem[j][k];
+                                                        temp.mem[0][k] = IsNotWithinEpsilon(faktor * Campuran.mem[j][k]);
                                                 }
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
+                                                        Campuran.mem[i][k] = IsNotWithinEpsilon(Campuran.mem[i][k] - temp.mem[0][k]);
                                                 }
                                         }
                                 }
@@ -1078,10 +1078,10 @@ public class matriks
                                                 matriks temp = new matriks();
                                                 temp.MakeMATRIKS(1, Campuran.NKolEff);
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        temp.mem[0][k] = faktor * Campuran.mem[j][k];
+                                                        temp.mem[0][k] = IsNotWithinEpsilon(faktor * Campuran.mem[j][k]);
                                                 }
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
+                                                        Campuran.mem[i][k] = IsNotWithinEpsilon(Campuran.mem[i][k] - temp.mem[0][k]);
                                                 }
                                         }
                                 }
@@ -1090,7 +1090,7 @@ public class matriks
                                 if (Campuran.mem[i][i] != 1) {
                                         faktor = 1 / Campuran.mem[i][i];
                                         for (j = 0; j < Campuran.NKolEff; j++) {
-                                                Campuran.mem[i][j] = Campuran.mem[i][j] * faktor;
+                                                Campuran.mem[i][j] = IsNotWithinEpsilon(Campuran.mem[i][j] * faktor);
                                         }
                                 }
                         }
@@ -1098,14 +1098,22 @@ public class matriks
                         hasil.MakeMATRIKS(M.NBrsEff, M.NKolEff);
                         for (i = 0; i < M.NBrsEff; i++) {
                                 for (j = 0; j < M.NKolEff; j++) {
-                                        hasil.mem[i][j] = Campuran.mem[i][j+M.NBrsEff];
+                                        hasil.mem[i][j] = IsNotWithinEpsilon(Campuran.mem[i][j+M.NBrsEff]);
                                 }
                         }
                         return hasil;
                 }
         }
-
-
+	
+	float IsNotWithinEpsilon(float x) {
+		/* Mastiin bilangan ga di antara epsilon (10^-10) */
+                if ((x < 0.0000000001) && (x > -0.0000000001)) {
+                        return 0;
+                }
+                else {
+                        return x;
+                }
+        }
 
         void BacaFileEks (matriks M,File file)
         {
