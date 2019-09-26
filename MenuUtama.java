@@ -206,6 +206,7 @@ class MenuUtama {
                                 case 1:
                                 M.InputFileEksNonAug(M);
                                 System.out.println("Determinan : "+M.DeterminanGauss(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
                                     l = input.nextInt();
@@ -215,6 +216,7 @@ class MenuUtama {
                                 case 2:
                                 M.InputUserNonAug(M);
                                 System.out.println("Determinan : "+M.DeterminanGauss(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
                                     l = input.nextInt();
@@ -235,6 +237,7 @@ class MenuUtama {
                                 case 1:
                                 M.InputFileEksNonAug(M);
                                 System.out.println("Determinan : "+M.DeterminanGaussJordan(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
                                     l = input.nextInt();
@@ -244,6 +247,7 @@ class MenuUtama {
                                 case 2:
                                 M.InputUserNonAug(M);
                                 System.out.println("Determinan : "+M.DeterminanGaussJordan(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
                                     l = input.nextInt();
@@ -264,6 +268,7 @@ class MenuUtama {
                                 case 1:
                                 M.InputFileEksNonAug(M);
                                 System.out.println("Determinan inversnya : "+M.DeterminanInvers(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
                                     l = input.nextInt();
@@ -273,6 +278,7 @@ class MenuUtama {
                                 case 2:
                                 M.InputUserNonAug(M);
                                 System.out.println("Determinan inversnya : "+M.DeterminanInvers(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
                                     l = input.nextInt();
@@ -291,8 +297,24 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Determinan : "+M.DeterminanKofaktor(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Determinan : "+M.DeterminanKofaktor(M));
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                             break;
@@ -302,13 +324,11 @@ class MenuUtama {
                         }
                         break;
                         case 3:
-                        System.out.println("1. Metode eliminasi Gauss");
-                        System.out.println("2. Metode eliminasi Gauss-Jordan");
-                        System.out.println("3. Metode matriks balikan");
-                        System.out.println("4. Kaidah Cramer");
-                        System.out.println("5. Kembali ke menu sebelumnya");
+                        System.out.println("1. Gauss-Jordan");
+                        System.out.println("2. Cramer (Kofaktor)");
+                        System.out.println("3. Kembali ke menu sebelumnya");
                         j = input.nextInt();
-                        while (j<1 || j>5) {
+                        while (j<1 || j>3) {
                             System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
                             j = input.nextInt();
                         }
@@ -323,8 +343,26 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Berikut adalah invers matriksnya :");
+                                (M.InversGaussJordan(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Berikut adalah invers matriksnya :");
+                                (M.InversGaussJordan(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                             break;
@@ -338,42 +376,30 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Berikut adalah invers matriksnya :");
+                                (M.InversMatriks(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Berikut adalah invers matriksnya :");
+                                (M.InversMatriks(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                             break;
                             case 3:
-                            System.out.println("1. Masukan dari file");
-                            System.out.println("2. Masukan pengguna");
-                            k = input.nextInt();
-                            while (k<1 || k>2) {
-                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
-                                k = input.nextInt();
-                            }
-                            switch(k) {
-                                case 1:
-                                break;
-                                case 2:
-                                break;
-                            }
-                            break;
-                            case 4:
-                            System.out.println("1. Masukan dari file");
-                            System.out.println("2. Masukan pengguna");
-                            k = input.nextInt();
-                            while (k<1 || k>2) {
-                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
-                                k = input.nextInt();
-                            }
-                            switch(k) {
-                                case 1:
-                                break;
-                                case 2:
-                                break;
-                            }
-                            break;
-                            case 5:
                             back = true;
                             break;
                         }
@@ -388,8 +414,26 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Berikut adalah matriks kofaktornya :");
+                                (M.MakeKofaktor(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Berikut adalah matriks kofaktornya :");
+                                (M.MakeKofaktor(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                         break;
@@ -403,23 +447,45 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Berikut adalah matriks adjoinnya :");
+                                (M.AdjointMatriks(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Berikut adalah matriks adjoinnya :");
+                                (M.AdjointMatriks(M)).TulisMATRIKS();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                         break;
                         case 6:
-                        System.out.println("1. Masukan dari file");
-                            System.out.println("2. Masukan pengguna");
+                        System.out.println("1. Masukan pengguna");
                             k = input.nextInt();
-                            while (k<1 || k>2) {
+                            while (k!=1) {
                                 System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
                                 k = input.nextInt();
                             }
                             switch(k) {
                                 case 1:
-                                break;
-                                case 2:
+                                M.Interpolasi();
+                                System.out.println("Klik '9' untuk kembali ke menu utama");
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                         break;
