@@ -267,7 +267,7 @@ class MenuUtama {
                             switch(k) {
                                 case 1:
                                 M.InputFileEksNonAug(M);
-                                System.out.println("Determinan inversnya : "+M.DeterminanInvers(M));
+                                M.DeterminanInvers(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -480,6 +480,7 @@ class MenuUtama {
                             switch(k) {
                                 case 1:
                                 M.Interpolasi();
+                                M.SPLParametrik(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
