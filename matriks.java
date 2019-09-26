@@ -710,8 +710,7 @@ public class matriks
                 }
                 
                 a.TulisMATRIKS();
-                det= a.DeterminanKofaktor(a);
-                a.DeterminanGauss(a);
+                det= a.DeterminanGauss(a);
                 System.out.println(det);
                 for (j=1;j<=M.NKolEff;j++)
                 {
@@ -731,8 +730,8 @@ public class matriks
                                }
                        }
                        a.TulisMATRIKS();
-                        solSPL[j]=(float)(a.DeterminanKofaktor(a))/det;
-                        System.out.println(a.DeterminanKofaktor(a));
+                        solSPL[j]=(float)(a.DeterminanGauss(a))/det;
+                        System.out.println(a.DeterminanGauss(a));
                         for (i=1;i<=M.NBrsEff;i++)
                        {
                                 float temp;
@@ -759,7 +758,7 @@ public class matriks
                 {
                         System.out.println("Matriks augmented masukkan harus berisi n x n+1 ya ~~");
                 }
-                else if (DeterminanKofaktor(a)==0)
+                else if (DeterminanGauss(a)==0)
                 {
                         System.out.println("Maaf ya.. Matriks augmented tidak ada solusi SPLnya karena ngga ada inversnya ~");
                 }
@@ -851,14 +850,16 @@ public class matriks
                                                 }
 
                                         }
-                                }
+                                
                                 det += tanda*M.mem[1][j]*MKof.DeterminanKofaktor(MKof);
                                 tanda *= -1;
+                                }
                 }
                 return det;
         }
 
-        void DeterminanGauss (matriks M) {
+        float DeterminanGauss (matriks M) 
+        {
                 // KAMUS LOKAL //
                 boolean IsFoundNot0;
                 int i;
@@ -902,9 +903,9 @@ public class matriks
                 if (det==-0.0) {
                         det*=-1;
                 }
-                M.TulisMATRIKS();
-                System.out.println(det);
-               }
+                return det;
+        }
+
                void DeterminanGaussJordan (matriks M) {
                 boolean IsFoundNot0;
                 int i;
@@ -960,7 +961,7 @@ public class matriks
                }
                void DeterminanInvers (matriks M) {
                 float det;        
-                det = 1/(M.DeterminanKofaktor(M));
+                det = 1/(M.DeterminanGauss(M));
                 System.out.println("Determinan : "+det);
                }
         matriks TransposeMatriks(matriks M) {
@@ -976,8 +977,8 @@ public class matriks
         }
         
         matriks InversMatriks(matriks M) {
-                if (DeterminanKofaktor(M) != 0) {
-                        return KaliKons(AdjointMatriks(M), (1 / DeterminanKofaktor(M)));
+                if (DeterminanGauss(M) != 0) {
+                        return KaliKons(AdjointMatriks(M), (1 / DeterminanGauss(M)));
                 }
                 else {
                         System.out.println("Matriks tidak punya invers");
@@ -1033,7 +1034,7 @@ public class matriks
 	matriks InversGaussJordan(matriks M) {
                 int i, j, k;
                 float faktor;
-                if (DeterminanKofaktor(M) == 0.00) {
+                if (DeterminanGauss(M) == 0.00) {
                         System.out.println("Matriks tidak punya balikan");
                         return M;
                 }
@@ -1157,7 +1158,7 @@ public class matriks
                               
                 
                 M.BacaMATRIKS(brs,kol);
-                System.out.println(M.DeterminanKofaktor(M));
+                System.out.println(M.DeterminanGauss(M));
                 M.BacaMATRIKSAug(brs,kol);
                 M.CramerSPL(M);
                 
