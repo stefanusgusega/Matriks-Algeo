@@ -2,9 +2,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.*;
-import java.util.List;
-import java.util.ArrayList;
 
 public class matriks
 {
@@ -309,6 +306,8 @@ public class matriks
                                 System.out.print("x"+j+" = "+alph[j]);
                                 System.out.println();
                         }
+
+                        m.TulisMATRIKSAug();
                 }
                 
         }
@@ -1042,7 +1041,7 @@ public class matriks
 	matriks InversGaussJordan(matriks M) {
                 int i, j, k;
                 float faktor;
-                if (DeterminanKofaktor(M) == 0.00) {
+                if (DeterminanKofaktor(M) == 0) {
                         System.out.println("Matriks tidak punya balikan");
                         return M;
                 }
@@ -1067,11 +1066,7 @@ public class matriks
                         for (j = 0; j < M.NKolEff - 1; j++) {
                                 for (i = j + 1; i < M.NBrsEff; i++) {
 					if (Campuran.mem[j][j] == 0) {
-						k = 1;
-						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
-							Campuran.OBETukar(j, j+k);
-							k = k + 1;
-						}
+						OBEtukar(i, i+1);
 					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
@@ -1083,17 +1078,14 @@ public class matriks
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
                                                         Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
                                                 }
+                                        Campuran.TulisMATRIKS();
                                         }
                                 }
                         }
                         for (j = Campuran.NKolEff - 1; j > 0; j--) {
                                 for (i = j - 1; i >= 0; i--) {
-					if (Campuran.mem[j][j] == 0) {
-						k = i-1;
-						while ((Campuran.mem[j][j] == 0) && (k >= 0)) {
-							Campuran.OBETukar(i, k);
-							k = k - 1;
-						}
+                                        if (Campuran.mem[j][j] == 0) {
+						OBEtukar(i, i-1);
 					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
@@ -1106,6 +1098,7 @@ public class matriks
                                                         Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
                                                 }
                                         }
+                                        Campuran.TulisMATRIKS();
                                 }
                         }
                         for (i = 0; i < Campuran.NBrsEff; i++) {
@@ -1143,8 +1136,6 @@ public class matriks
                         int brs,kol;
                         String ad;
                         Scanner sc = new Scanner(System.in); 
-                        
-                        System.out.println("Masukkan baris dan kolom untuk matriks augmented yang ada di file yaa~");  
                         System.out.println("Baris :");
                         brs = sc.nextInt();
                         System.out.println("Kolom :");
@@ -1180,82 +1171,27 @@ public class matriks
                         }
         }
 
-        
-        void InputFileEksNonAug (matriks M)
-        {
-                        int brs,kol;
-                        String ad;
-                        Scanner sc = new Scanner(System.in); 
-                        
-                        System.out.println("Masukkan baris dan kolom  matriks n x n yang ada di file yaa~");  
-                        System.out.println("Baris :");
-                        brs = sc.nextInt();
-                        System.out.println("Kolom :");
-                        kol = sc.nextInt();
-                         System.out.println("Masukkan alamat :"); 
-                         Scanner ab= new Scanner(System.in); 
-                        ad = ab.nextLine();
-                        M.MakeMATRIKS(brs,kol);
-                        int i,j;
-                        
-                        File file = new File(ad);
-                        try
-                        {          
-                                Scanner scan = new Scanner(file);
-                                while(scan.hasNextFloat())
-                                {
-                                        for (i=1;i<=brs;i++)
-                                        {
-                                                for (j=1;j<=kol;j++)
-                                                {
-                                                        float getData = scan.nextFloat();
-                                                        M.mem[i][j]=getData;
-                                                }
-                                        }
-                                }
-                        
-                                scan.close();
-                        }
-                        
-                        catch(FileNotFoundException ex)
-                        {
-                                System.out.println("File Tidak Ditemukan\n"); 
-                        }
-        }
-
         void InputUserAug (matriks M)
         {
                 int brs,kol;
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Masukkan untuk baris dan kolom untuk matriks augmented ya ~");  
+                Scanner sc = new Scanner(System.in); 
                 System.out.println("Baris :");
                 brs = sc.nextInt();
                 System.out.println("Kolom :");
                 kol = sc.nextInt();
                 M.BacaMATRIKSAug(brs,kol);
         }
-        
-        void InputUserNonAug (matriks M)
-        {
-                int brs,kol;
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Masukkan untuk baris dan kolom matriks n x n ya ~"); 
-                System.out.println("Baris :");
-                brs = sc.nextInt();
-                System.out.println("Kolom :");
-                kol = sc.nextInt();
-                M.BacaMATRIKS(brs,kol);
-        }
-
- 
 
         public static void main (String[] args)
         {
                 matriks M = new matriks ();
-                M.InputFileEksAug(M);
-                M.InverseSPL(M);
-                M.CramerSPL(M);
-                M.InverseSPL(M);
+                int brs = 3;
+                System.out.println();
+                int kol = 3;
+                M.BacaMATRIKS(brs,kol);
+                System.out.println(M.DeterminanKofaktor(M));
+                M.InversGaussJordan(M);
+                M.TulisMATRIKS();
         }
 }
 
