@@ -162,6 +162,8 @@ public class matriks
                 if (AdaBukanSolSPL(m))
                 {
                         System.out.println("Tidak ada solusi SPL\n");
+                        m.SaveString("Tidak ada solusi SPL");
+
                 }
                 else {
                 for (i=a-1; i>=1; i--)
@@ -185,12 +187,14 @@ public class matriks
                         if (IsSatuUtama(m,IdXPalingBawah(m,j),j))
                         {
                                 System.out.print("x"+j+" = ");
+                                m.SaveString("x"+j+"=");
                                 
                                 if (((j+1)!=m.NKolEff+1) && (m.mem[IdXPalingBawah(m,j)][j+1]!=0))
                                 {        simp = m.mem[IdXPalingBawah(m,j)][j+1]*(-1);
                                         str1=String.valueOf(simp);
                                         str2 = String.valueOf(alph[j+1]);
                                         System.out.print(str1+str2);
+                                        m.SaveString(str1+str2);
                                         ha++;
                                 }
                                 else if(((j+1)==m.NKolEff+1) && (m.mem[IdXPalingBawah(m,j)][j+1]!=0))
@@ -198,6 +202,7 @@ public class matriks
                                         simp = m.mem[IdXPalingBawah(m,j)][j+1];
                                         str1=String.valueOf(simp);
                                         System.out.print(str1);
+                                        m.SaveString(str1);
                                         ha++;
                                 }
                                         
@@ -216,11 +221,13 @@ public class matriks
                                                         if (ha!=1)
                                                         {
                                                                 System.out.print("+"+str1+str2);
+                                                                m.SaveString(str1+str2);
                                                                 ha++;
                                                         }
                                                         else
                                                         {
                                                                 System.out.print(str1+str2);
+                                                                m.SaveString(str1+str2);
                                                                 ha++;
                                                         }
                                                         
@@ -234,17 +241,20 @@ public class matriks
                                                                 if (ha!=1)
                                                                 {
                                                                         System.out.print("+"+str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                                 else
                                                                 {
                                                                         System.out.print(str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                         }
                                                         else
                                                         {
                                                                 System.out.print(str1);
+                                                                m.SaveString(str1);
                                                         }
                                                 }
                                         }
@@ -257,6 +267,7 @@ public class matriks
                                                         str2 = String.valueOf(alph[k]);
                         
                                                         System.out.print(str1+str2);
+                                                        m.SaveString(str1+str2);
                                                         ha++;
                                                 }
                                                 else
@@ -268,17 +279,20 @@ public class matriks
                                                                 if (ha!=1)
                                                                 {
                                                                         System.out.print("+"+str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                                 else
                                                                 {
                                                                         System.out.print(str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                         }
                                                         else
                                                         {
                                                                 System.out.print(str1);
+                                                                m.SaveString(str1);
                                                                 ha++;
                                                         }
                                                 }
@@ -312,7 +326,9 @@ public class matriks
                         {
 
                                 System.out.print("x"+j+" = "+alph[j]);
+                                m.SaveString("x"+j+" = "+alph[j]);
                                 System.out.println();
+                                
                         }
                 }
                 
@@ -746,7 +762,6 @@ public class matriks
                                }
                        }
                         solSPL[j]=(float)(a.DeterminanKofaktor(a))/det;
-                        System.out.println(a.DeterminanKofaktor(a));
                         for (i=1;i<=M.NBrsEff;i++)
                        {
                                 float temp;
@@ -758,9 +773,11 @@ public class matriks
                 }
                 
                 System.out.println("Ini hasil SPL Cramer");
+                M.SaveString("Ini hasil SPL Cramer");
                 for (j=1;j<=M.NKolEff;j++)
                 {
                         System.out.println("x"+j+"= "+solSPL[j]);
+                        M.SaveString("x"+j+"= "+solSPL[j]);
                 }
 
         }
@@ -776,6 +793,7 @@ public class matriks
                 else if (DeterminanKofaktor(a)==0)
                 {
                         System.out.println("Maaf ya.. Matriks augmented tidak ada solusi SPLnya karena ngga ada inversnya ~");
+                        a.SaveString("Matriks augmented masukkan harus berisi n x n+1 ya ~~");
                 }
                 else{
                 int  i,k;
@@ -808,9 +826,11 @@ public class matriks
                 }
                 
                 System.out.println("Ini hasil SPL Invers");
+                a.SaveString("Ini hasil SPL Invers");
                 for (j=1;j<=NKolEff;j++)
                 {
                         System.out.println("x"+j+"= "+solInvers[j]);
+                        a.SaveString("x"+j+"= "+solInvers[j]);
                 }
         }
         }
@@ -844,6 +864,8 @@ public class matriks
                         sum=sum+mem[i][NKolEff+1]*(float)Math.pow(x,i-1);
                 }
                 System.out.println("Hasil interpolasinya : "+sum);
+                SaveString("Hasil interpolasinya : ");
+                SaveFloat(sum);
         }
 
         float DeterminanKofaktor (matriks M) {
@@ -929,6 +951,7 @@ public class matriks
                 if (det==-0.0) {
                         det*=-1;
                 }
+                M.SaveFloat(det);
                 return det;
                }
         
@@ -982,12 +1005,14 @@ public class matriks
                 if (det==-0.0) {
                         det*=-1;
                 }
+                M.SaveFloat(det);
                 return det;
                }
-               void DeterminanInvers (matriks M) {
+               void DeterminanInversnya (matriks M) {
                 float det;        
                 det = 1/(M.DeterminanGauss(M));
                 System.out.println("Determinan : "+det);
+                M.SaveFloat(det);
                }
         matriks TransposeMatriks(matriks M) {
                 int i, j;
@@ -1257,23 +1282,41 @@ public class matriks
                                 kol = sc.nextInt();
                                 M.BacaMATRIKS(brs,kol);
                         }
-                
-                 
-                        public static void main (String[] args)
+                        
+                        void SaveString(String j)
                         {
-                                float i = (float)1.223;
+                                try (FileWriter writer = new FileWriter("text.txt");
+                                BufferedWriter bw = new BufferedWriter(writer)) {
+                   
+                               bw.write(j);
+                               bw.newLine();
+                   
+                           } catch (IOException e) {
+                               System.err.format("IOException: %s%n", e);
+                           }     
+                                               
+                        }
+
+                        void SaveFloat(float i)
+                        {
                                 String j = String.valueOf(i);
                                 try (FileWriter writer = new FileWriter("text.txt");
                                 BufferedWriter bw = new BufferedWriter(writer)) {
                    
                                bw.write(j);
                                bw.newLine();
-                               bw.write(j);
                    
                            } catch (IOException e) {
                                System.err.format("IOException: %s%n", e);
-                           }                               
+                           }     
+                                               
+                        }
+                 
+                        public static void main (String[] args)
+                        {
+
+                               
                                 matriks M = new matriks ();
-                                M.InputFileEksAug(M);
+                                M.Interpolasi();
                         }
                 }
