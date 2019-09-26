@@ -760,8 +760,17 @@ public class matriks
                         System.out.println("Maaf ya.. Matriks augmented tidak ada solusi SPLnya karena ngga ada inversnya ~");
                 }
                 else{
+                int  i,k;
                 matriks M= new matriks ();
-                M.MakeMATRIKS();
+                M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1;
+                for (i=1;i<=a.NBrsEff;i++)
+                {
+                        for (k=1;k<=a.NKolEff;k++)
+                        {
+                               M.mem[i][k]=a.mem[i][k];
+                        }
+                }
+
                 M = InversMatriks(a);
                 M.TulisMATRIKS();
                 int i,j,k;
