@@ -21,7 +21,7 @@ class MenuUtama {
         back =false;
         exit = false;
         Scanner input = new Scanner(System.in);
-        while (exit == false) 
+        while (exit == false)
         {
         clearScreen();
         System.out.println("MENU");
@@ -51,7 +51,7 @@ class MenuUtama {
             }
             clearScreen();
             switch(j) {
-                case 1:
+                case 1: 
                 break;
                 case 2:
                 break;
