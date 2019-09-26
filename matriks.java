@@ -1,3 +1,6 @@
+
+package com.javatpoint;  
+import java.io.FileWriter;  
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -5,6 +8,20 @@ import java.io.IOException;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
+
+class FileWriterExample { 
+        public static void main (String[] args) {
+        void Save(float i){  
+                try{    
+                FileWriter fw=new FileWriter("Output.txt");    
+                String simp = String.valueOf(i);
+                fw.write(simp);    
+                fw.close();    
+                }catch(Exception e){System.out.println(e);}    
+                System.out.println("Yuhu~~ Suksess di save");    
+        }    
+        }  
+}
 
 public class matriks
 {
@@ -309,8 +326,6 @@ public class matriks
                                 System.out.print("x"+j+" = "+alph[j]);
                                 System.out.println();
                         }
-
-                        m.TulisMATRIKSAug();
                 }
                 
         }
@@ -765,7 +780,7 @@ public class matriks
                 else{
                 int  i,k;
                 matriks M= new matriks ();
-                M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1;
+                M.MakeMATRIKS(a.NBrsEff,a.NKolEff);
                 for (i=1;i<=a.NBrsEff;i++)
                 {
                         for (k=1;k<=a.NKolEff;k++)
@@ -774,9 +789,8 @@ public class matriks
                         }
                 }
 
-                M = InversMatriks(a);
-                M.TulisMATRIKS();
-                int i,j,k;
+                (M.InversMatriks(M)).TulisMATRIKS();
+                int j;
                 float elmt;
                 float [] solInvers = new float[NBrsEff+1];
                 for (i=1;i<=NBrsEff;i++)
@@ -1068,13 +1082,6 @@ public class matriks
                         }
                         for (j = 0; j < M.NKolEff - 1; j++) {
                                 for (i = j + 1; i < M.NBrsEff; i++) {
-					if (Campuran.mem[j][j] == 0) {
-						k = 1;
-						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
-							Campuran.OBETukar(j, j+k);
-							k = k + 1;
-						}
-					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
@@ -1090,13 +1097,6 @@ public class matriks
                         }
                         for (j = Campuran.NKolEff - 1; j > 0; j--) {
                                 for (i = j - 1; i >= 0; i--) {
-					if (Campuran.mem[j][j] == 0) {
-						k = i-1;
-						while ((Campuran.mem[j][j] == 0) && (k >= 0)) {
-							Campuran.OBETukar(i, k);
-							k = k - 1;
-						}
-					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
@@ -1253,6 +1253,9 @@ public class matriks
 
         public static void main (String[] args)
         {
+                FileWriterExample a = new FileWriterExample();
+                float i = (float)1.23;
+                a.Save(i);
                 matriks M = new matriks ();
                 M.InputFileEksAug(M);
                 M.InverseSPL(M);
