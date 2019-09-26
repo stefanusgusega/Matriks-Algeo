@@ -1033,17 +1033,17 @@ public class matriks
                         for (j = 0; j < M.NKolEff; j++) {
                                 matriks Kofaktor = new matriks();
                                 Kofaktor.MakeMATRIKS(M.NBrsEff-1, M.NKolEff-1);
-                                p = 0;
+                                o = 0;
                                 for (k = 0; k < M.NBrsEff; k++) {
-                                        o = 0;
+                                        p = 0;
                                         for (l = 0; l < M.NKolEff; l++) {
                                                 if (k != i && l != j) {
-                                                        Kofaktor.mem[o][p] = M.mem[i][j];
-                                                        o = o + 1;
+                                                        Kofaktor.mem[o][p] = M.mem[k][l];
+                                                        p = p + 1;
                                                 }
                                         }
-                                        if (o == M.NBrsEff-1) {
-                                                p = p + 1;
+                                        if (p == M.NBrsEff-1) {
+                                                o = o + 1;
                                         }
                                 }
                                 KofaktorBesar.mem[i][j] = DeterminanKofaktor(Kofaktor) * sign;
