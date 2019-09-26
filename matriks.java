@@ -967,10 +967,10 @@ public class matriks
                 }
                 return det;
                }
-               void DeterminanInvers (matriks M) {
+               float DeterminanInvers (matriks M) {
                 float det;        
                 det = 1/(M.DeterminanGauss(M));
-                System.out.println("Determinan : "+det);
+                return det;
                }
         matriks TransposeMatriks(matriks M) {
                 int i, j;
@@ -1069,7 +1069,7 @@ public class matriks
 					if (Campuran.mem[j][j] == 0) {
 						k = 1;
 						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
-							Campuran.OBETukar(j, j+k);
+							Campuran.OBETukar(j,j+k);
 							k = k + 1;
 						}
 					}
@@ -1091,7 +1091,7 @@ public class matriks
 					if (Campuran.mem[j][j] == 0) {
 						k = i-1;
 						while ((Campuran.mem[j][j] == 0) && (k >= 0)) {
-							Campuran.OBETukar(i, k);
+							Campuran.OBETukar(i,k);
 							k = k - 1;
 						}
 					}

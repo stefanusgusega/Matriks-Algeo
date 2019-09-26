@@ -204,9 +204,22 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
-                                
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Determinan : "+M.DeterminanGauss(M));
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Determinan : "+M.DeterminanGauss(M));
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                             break;
@@ -220,8 +233,22 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Determinan : "+M.DeterminanGaussJordan(M));
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
+                                M.InputUserNonAug(M);
+                                System.out.println("Determinan : "+M.DeterminanGaussJordan(M));
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                             }
                             break;
@@ -235,6 +262,13 @@ class MenuUtama {
                             }
                             switch(k) {
                                 case 1:
+                                M.InputFileEksNonAug(M);
+                                System.out.println("Determinan inversnya : "+M.DeterminanInvers(M));
+                                l = input.nextInt();
+                                while (l!=9) {
+                                    l = input.nextInt();
+                                }
+                                back = true;
                                 break;
                                 case 2:
                                 break;
