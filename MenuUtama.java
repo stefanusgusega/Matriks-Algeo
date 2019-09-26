@@ -4,9 +4,9 @@ import java.util.concurrent.TimeUnit;
 class MenuUtama {
     public static void main (String[] args) {
         boolean exit,back;
-        exit = false;
-        back = false;
+        int i,j,k;
         Scanner input = new Scanner(System.in);
+        exit = false;
         while (exit == false) {
                 clearScreen();
                 System.out.println("MENU");
@@ -17,11 +17,13 @@ class MenuUtama {
                 System.out.println("5. Adjoin");
                 System.out.println("6. Interpolasi Polinom");
                 System.out.println("7. Keluar");
+                back = false;
                 while (back == false) {
-                    int i = input.nextInt();
+                    i = input.nextInt();
                     while (i<1 || i>7) {
                         System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
                         i = input.nextInt();
+                    }
                     clearScreen();
                     switch (i) {
                         case 1:
@@ -30,6 +32,76 @@ class MenuUtama {
                         System.out.println("3. Metode matriks balikan");
                         System.out.println("4. Kaidah Cramer");
                         System.out.println("5. Kembali ke menu sebelumnya");
+                        j = input.nextInt();
+                        while (j<1 || j>5) {
+                            System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                            j = input.nextInt();
+                        }
+                        switch (j) {
+                            case 1:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan dari user");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch (k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 2:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan dari user");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch (k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 3:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan dari user");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch (k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 4:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan dari user");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch (k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 5:
+                            back = true;
+                            break;
+                            }
                         break;
                         case 2:
                         System.out.println("1. Metode eliminasi Gauss");
@@ -37,6 +109,76 @@ class MenuUtama {
                         System.out.println("3. Metode matriks balikan");
                         System.out.println("4. Kaidah Cramer");
                         System.out.println("5. Kembali ke menu sebelumnya");
+                        j = input.nextInt();
+                        while (j<1 || j>5) {
+                            System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                            j = input.nextInt();
+                        }
+                        switch (j) {
+                            case 1:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 2:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 3:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 4:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 5:
+                            back = true;
+                            break;
+                        }
                         break;
                         case 3:
                         System.out.println("1. Metode eliminasi Gauss");
@@ -44,21 +186,131 @@ class MenuUtama {
                         System.out.println("3. Metode matriks balikan");
                         System.out.println("4. Kaidah Cramer");
                         System.out.println("5. Kembali ke menu sebelumnya");
+                        j = input.nextInt();
+                        while (j<1 || j>5) {
+                            System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                            j = input.nextInt();
+                        }
+                        switch (j) {
+                            case 1:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 2:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 3:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 4:
+                            System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
+                            break;
+                            case 5:
+                            back = true;
+                            break;
+                        }
                         break;
                         case 4:
+                        System.out.println("1. Masukan dari file");
+                        System.out.println("2. Masukan pengguna");
+                        k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
                         break;
                         case 5:
+                        System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
                         break;
                         case 6:
+                        System.out.println("1. Masukan dari file");
+                            System.out.println("2. Masukan pengguna");
+                            k = input.nextInt();
+                            while (k<1 || k>2) {
+                                System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
+                                k = input.nextInt();
+                            }
+                            switch(k) {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                            }
                         break;
                         case 7:
                         exit = true;
+                        back = true;
                         break;
                     }
                 }
             }
+            
         }
-    }
 
     public final static void clearScreen()
 {
