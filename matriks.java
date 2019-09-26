@@ -1066,7 +1066,7 @@ public class matriks
                         for (j = 0; j < M.NKolEff - 1; j++) {
                                 for (i = j + 1; i < M.NBrsEff; i++) {
 					if (Campuran.mem[j][j] == 0) {
-						k = 1
+						k = 1;
 						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
 							OBETukar(j, j+k);
 							k = k + 1;
@@ -1088,7 +1088,7 @@ public class matriks
                         for (j = Campuran.NKolEff - 1; j > 0; j--) {
                                 for (i = j - 1; i >= 0; i--) {
 					if (Campuran.mem[j][j] == 0) {
-						k = 1
+						k = 1;
 						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
 							OBETukar(j, j+k);
 							k = k + 1;
