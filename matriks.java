@@ -306,6 +306,8 @@ public class matriks
                                 System.out.print("x"+j+" = "+alph[j]);
                                 System.out.println();
                         }
+
+                        m.TulisMATRIKSAug();
                 }
                 
         }
@@ -760,7 +762,7 @@ public class matriks
                 else{
                 int  i,k;
                 matriks M= new matriks ();
-                M.MakeMATRIKS(a.NBrsEff,a.NKolEff);
+                M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1;
                 for (i=1;i<=a.NBrsEff;i++)
                 {
                         for (k=1;k<=a.NKolEff;k++)
@@ -769,8 +771,9 @@ public class matriks
                         }
                 }
 
-                (M.InversMatriks(M)).TulisMATRIKS();
-                int j;
+                M = InversMatriks(a);
+                M.TulisMATRIKS();
+                int i,j,k;
                 float elmt;
                 float [] solInvers = new float[NBrsEff+1];
                 for (i=1;i<=NBrsEff;i++)
@@ -1062,6 +1065,13 @@ public class matriks
                         }
                         for (j = 0; j < M.NKolEff - 1; j++) {
                                 for (i = j + 1; i < M.NBrsEff; i++) {
+					if (Campuran.mem[j][j] == 0) {
+						k = 1
+						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
+							OBETukar(j, j+k);
+							k = k + 1;
+						}
+					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
@@ -1077,6 +1087,13 @@ public class matriks
                         }
                         for (j = Campuran.NKolEff - 1; j > 0; j--) {
                                 for (i = j - 1; i >= 0; i--) {
+					if (Campuran.mem[j][j] == 0) {
+						k = 1
+						while ((Campuran.mem[j][j] == 0) && (k < Campuran.NBrsEff)) {
+							OBETukar(j, j+k);
+							k = k + 1;
+						}
+					}
                                         if (Campuran.mem[i][j] != 0) {
                                                 faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
