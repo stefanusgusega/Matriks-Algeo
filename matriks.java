@@ -1128,7 +1128,7 @@ public class matriks
                                 if (Campuran.mem[i][i] != 1) {
                                         faktor = 1 / Campuran.mem[i][i];
                                         for (j = 0; j < Campuran.NKolEff; j++) {
-                                                Campuran.mem[i][j] = Campuran.mem[i][j] / Campuran.mem[i][i];
+                                                Campuran.mem[i][j] = Campuran.mem[i][j] * faktor;
                                         }
                                 }
                         }
