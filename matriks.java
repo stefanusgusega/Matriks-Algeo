@@ -1101,7 +1101,7 @@ public class matriks
                                                 matriks temp = new matriks();
                                                 temp.MakeMATRIKS(1, Campuran.NKolEff);
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        temp.mem[0][k] = faktor * Campuran.mem[i][k];
+                                                        temp.mem[0][k] = faktor * Campuran.mem[j][k];
                                                 }
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
                                                         Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
@@ -1116,7 +1116,7 @@ public class matriks
                                                 matriks temp = new matriks();
                                                 temp.MakeMATRIKS(1, Campuran.NKolEff);
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        temp.mem[0][k] = faktor * Campuran.mem[i][k];
+                                                        temp.mem[0][k] = faktor * Campuran.mem[j][k];
                                                 }
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
                                                         Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
