@@ -306,8 +306,6 @@ public class matriks
                                 System.out.print("x"+j+" = "+alph[j]);
                                 System.out.println();
                         }
-
-                        m.TulisMATRIKSAug();
                 }
                 
         }
@@ -762,7 +760,7 @@ public class matriks
                 else{
                 int  i,k;
                 matriks M= new matriks ();
-                M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1;
+                M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1);
                 for (i=1;i<=a.NBrsEff;i++)
                 {
                         for (k=1;k<=a.NKolEff;k++)
@@ -773,7 +771,7 @@ public class matriks
 
                 M = InversMatriks(a);
                 M.TulisMATRIKS();
-                int i,j,k;
+                int j;
                 float elmt;
                 float [] solInvers = new float[NBrsEff+1];
                 for (i=1;i<=NBrsEff;i++)
