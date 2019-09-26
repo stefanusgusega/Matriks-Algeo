@@ -144,7 +144,7 @@ public class matriks
         }
 
 
-        void SolSPLAkhir(matriks m)
+        void SPLParametrik(matriks m)
         {
                 int i,j,w,ha;
                 ha=0;
@@ -710,10 +710,7 @@ public class matriks
                         }
                 }
                 
-                a.TulisMATRIKS();
                 det= a.DeterminanKofaktor(a);
-                a.DeterminanGauss(a);
-                System.out.println(det);
                 for (j=1;j<=M.NKolEff;j++)
                 {
                        for (i=1;i<=M.NBrsEff;i++)
@@ -723,7 +720,6 @@ public class matriks
                                 M.mem[(i)][(j)]=M.mem[(i)][(M.NKolEff+1)];
                                 M.mem[(i)][(M.NKolEff+1)]=temp;
                        }
-                       M.TulisMATRIKSAug();
                        for (i=1;i<=a.NBrsEff;i++)
                        {
                                for (k=1;k<=a.NKolEff;k++)
@@ -731,7 +727,6 @@ public class matriks
                                        a.mem[i][k]=M.mem[i][k];
                                }
                        }
-                       a.TulisMATRIKS();
                         solSPL[j]=(float)(a.DeterminanKofaktor(a))/det;
                         System.out.println(a.DeterminanKofaktor(a));
                         for (i=1;i<=M.NBrsEff;i++)
@@ -765,7 +760,18 @@ public class matriks
                         System.out.println("Maaf ya.. Matriks augmented tidak ada solusi SPLnya karena ngga ada inversnya ~");
                 }
                 else{
-                matriks M = InversMatriks(a);
+                int  i,k;
+                matriks M= new matriks ();
+                M.MakeMATRIKS(a.NBrsEff,a.NKolEff+1;
+                for (i=1;i<=a.NBrsEff;i++)
+                {
+                        for (k=1;k<=a.NKolEff;k++)
+                        {
+                               M.mem[i][k]=a.mem[i][k];
+                        }
+                }
+
+                M = InversMatriks(a);
                 M.TulisMATRIKS();
                 int i,j,k;
                 float elmt;
@@ -856,11 +862,10 @@ public class matriks
                                         det += tanda*M.mem[1][j]*MKof.DeterminanKofaktor(MKof);
                                         tanda *= -1;
                                 }
-                                det += tanda*M.mem[1][j]*MKof.DeterminanKofaktor(MKof);
-                                tanda *= -1;
                 }
                 return det;
         }
+
 
         float DeterminanGauss (matriks M) {
                 // KAMUS LOKAL //
@@ -908,7 +913,8 @@ public class matriks
                 }
                 return det;
                }
-               float DeterminanGaussJordan (matriks M) {
+        
+       float DeterminanGaussJordan (matriks M) {
                 boolean IsFoundNot0;
                 int i;
                 float temp,sign,det; 
@@ -962,7 +968,7 @@ public class matriks
                }
                void DeterminanInvers (matriks M) {
                 float det;        
-                det = 1/(M.DeterminanKofaktor(M));
+                det = 1/(M.DeterminanGauss(M));
                 System.out.println("Determinan : "+det);
                }
         matriks TransposeMatriks(matriks M) {
@@ -1001,7 +1007,7 @@ public class matriks
                                         p = 0;
                                         for (l = 0; l < M.NKolEff; l++) {
                                                 if (k != i && l != j) {
-                                                        Kofaktor.mem[o][p] = IsNotWithinEpsilon(M.mem[k][l]);
+                                                        Kofaktor.mem[o][p] = M.mem[k][l];
                                                         p = p + 1;
                                                 }
                                         }
@@ -1009,7 +1015,7 @@ public class matriks
                                                 o = o + 1;
                                         }
                                 }
-                                KofaktorBesar.mem[i][j] = IsNotWithinEpsilon(DeterminanKofaktor(Kofaktor) * sign);
+                                KofaktorBesar.mem[i][j] = DeterminanKofaktor(Kofaktor) * sign;
                                 sign = sign * -1;
                         }
                 }
@@ -1026,7 +1032,7 @@ public class matriks
                 hasil.MakeMATRIKS(M.NBrsEff, M.NKolEff);
                 for (i = 0; i < M.NBrsEff; i++) {
                     for (j = 0; j < M.NKolEff; j++) {
-                        hasil.mem[i][j] = IsNotWithinEpsilon(M.mem[i][j] * x);
+                        hasil.mem[i][j] = M.mem[i][j] * x;
                     }
                 }
                 return hasil;
@@ -1045,7 +1051,7 @@ public class matriks
                         for (i = 0; i < M.NBrsEff; i++) {
                                 for (j = 0; j < M.NKolEff * 2; j++) {
                                         if (j < M.NKolEff) {
-                                                Campuran.mem[i][j] = IsNotWithinEpsilon(M.mem[i][j]);
+                                                Campuran.mem[i][j] = M.mem[i][j];
                                         }
                                         else { // j >= MKolEff
                                                 if (i == j - M.NKolEff) {
@@ -1064,10 +1070,10 @@ public class matriks
                                                 matriks temp = new matriks();
                                                 temp.MakeMATRIKS(1, Campuran.NKolEff);
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        temp.mem[0][k] = IsNotWithinEpsilon(faktor * Campuran.mem[j][k]);
+                                                        temp.mem[0][k] = faktor * Campuran.mem[j][k];
                                                 }
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        Campuran.mem[i][k] = IsNotWithinEpsilon(Campuran.mem[i][k] - temp.mem[0][k]);
+                                                        Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
                                                 }
                                         }
                                 }
@@ -1079,10 +1085,10 @@ public class matriks
                                                 matriks temp = new matriks();
                                                 temp.MakeMATRIKS(1, Campuran.NKolEff);
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        temp.mem[0][k] = IsNotWithinEpsilon(faktor * Campuran.mem[j][k]);
+                                                        temp.mem[0][k] = faktor * Campuran.mem[j][k];
                                                 }
                                                 for (k = 0; k < Campuran.NKolEff; k++) {
-                                                        Campuran.mem[i][k] = IsNotWithinEpsilon(Campuran.mem[i][k] - temp.mem[0][k]);
+                                                        Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
                                                 }
                                         }
                                 }
@@ -1091,7 +1097,7 @@ public class matriks
                                 if (Campuran.mem[i][i] != 1) {
                                         faktor = 1 / Campuran.mem[i][i];
                                         for (j = 0; j < Campuran.NKolEff; j++) {
-                                                Campuran.mem[i][j] = IsNotWithinEpsilon(Campuran.mem[i][j] * faktor);
+                                                Campuran.mem[i][j] = Campuran.mem[i][j] * faktor;
                                         }
                                 }
                         }
@@ -1099,13 +1105,14 @@ public class matriks
                         hasil.MakeMATRIKS(M.NBrsEff, M.NKolEff);
                         for (i = 0; i < M.NBrsEff; i++) {
                                 for (j = 0; j < M.NKolEff; j++) {
-                                        hasil.mem[i][j] = IsNotWithinEpsilon(Campuran.mem[i][j+M.NBrsEff]);
+                                        hasil.mem[i][j] = Campuran.mem[i][j+M.NBrsEff];
                                 }
                         }
                         return hasil;
                 }
         }
-	
+
+
 	float IsNotWithinEpsilon(float x) {
 		/* Mastiin bilangan ga di antara epsilon (10^-10) */
                 if ((x < 0.0000000001) && (x > -0.0000000001)) {
@@ -1114,19 +1121,27 @@ public class matriks
                 else {
                         return x;
                 }
-        }
-
-        void BacaFileEks (File file)
+                        }
+        
+        void InputFileEksAug (matriks M)
         {
-                M.MakeMATRIKS(brs,kol-1);
+                        int brs,kol;
+                        String ad;
+                        Scanner sc = new Scanner(System.in); 
+                        System.out.println("Baris :");
+                        brs = sc.nextInt();
+                        System.out.println("Kolom :");
+                        kol = sc.nextInt();
+                         System.out.println("Masukkan alamat :"); 
+                         Scanner ab= new Scanner(System.in); 
+                        ad = ab.nextLine();
+                        M.MakeMATRIKS(brs,kol-1);
                         int i,j;
-                       
+                        
+                        File file = new File(ad);
                         try
-                        {                           
-                                //Inisialisasi Objek Scanner dan memasang objek file yang akan dibaca
+                        {          
                                 Scanner scan = new Scanner(file);
-                                
-                                //Menggunakan perulangan untuk membaca semua data didalam objek Scanner
                                 while(scan.hasNextFloat())
                                 {
                                         for (i=1;i<=brs;i++)
@@ -1146,43 +1161,26 @@ public class matriks
                         {
                                 System.out.println("File Tidak Ditemukan\n"); 
                         }
-                }
         }
-                        
-        
-                /*M.TulisMATRIKSAug();
-                System.out.println("--------------------------------------------");
+
+        void InputUserAug (matriks M)
+        {
+                int brs,kol;
+                Scanner sc = new Scanner(System.in); 
+                System.out.println("Baris :");
+                brs = sc.nextInt();
+                System.out.println("Kolom :");
+                kol = sc.nextInt();
+                M.BacaMATRIKSAug(brs,kol);
         }
 
         public static void main (String[] args)
         {
-               //Baca file ekstern
-                        //Membuat Statement Try-Catch untuk mengatasi error jika file tidak ditemuan
-                        
-                        int brs,kol;
-                        Scanner sc = new Scanner(System.in); 
-                        System.out.println("Baris :");
-                        brs = sc.nextInt();
-                        System.out.println("Kolom :");
-                        kol = sc.nextInt();
-                        matriks M = new matriks ();
-                              
-                
-                M.BacaMATRIKS(brs,kol);
-                System.out.println(M.DeterminanKofaktor(M));
-                M.BacaMATRIKSAug(brs,kol);
-                M.CramerSPL(M);
-                
+                matriks M = new matriks ();
+                M.InputFileEksAug(M);
                 M.InverseSPL(M);
-               /* M.InverseSPL(M);
-                M.InversMatriks(M); */
-                /*M.GaussSPL();
-                M.TulisMATRIKSAug();*/
-                /*System.out.println("Determinan : " + M.DeterminanKofaktor(M));
-                System.out.println("Determinan : " + M.DeterminanGauss(M));
-                System.out.println("Determinan : " + M.DeterminanGaussJordan(M));
-                M.SolusiSPL(M);
-                sc.close();
-    }*/
-
+                M.CramerSPL(M);
+                M.InverseSPL(M);
+        }
+}
 

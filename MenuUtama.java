@@ -17,7 +17,11 @@ class MenuUtama {
                 System.out.println("5. Adjoin");
                 System.out.println("6. Interpolasi Polinom");
                 System.out.println("7. Keluar");
+<<<<<<< HEAD
+                
+=======
                 back = false;
+>>>>>>> c7c5edba0a022d224436a2cff3d1b326e4f8c958
                 while (back == false) {
                     i = input.nextInt();
                     while (i<1 || i>7) {
@@ -32,6 +36,36 @@ class MenuUtama {
                         System.out.println("3. Metode matriks balikan");
                         System.out.println("4. Kaidah Cramer");
                         System.out.println("5. Kembali ke menu sebelumnya");
+<<<<<<< HEAD
+                        i = input.nextInt();
+                        clearScreen();
+                        switch (i) 
+                        {
+                            case 1 :
+                            System.out.println("1. Masukkan dari file");
+                            System.out.println("2. Masukkan dari user");
+                            i = input.nextInt();
+                            clearScreen();
+                            switch (i)
+                            {
+                                case 1 :
+
+                                break;
+                                case 2 :
+
+                                break;
+                            }
+                            break;
+                            case 2 :
+                            System.out.println("1. Masukkan dari file");
+                            System.out.println("2. Masukkan dari user");
+                            break;
+                            case 3 :
+
+                        }
+
+                
+=======
                         j = input.nextInt();
                         while (j<1 || j>5) {
                             System.out.println("Pilihan menu tidak ada! Masukkan lagi!");
@@ -112,6 +146,7 @@ class MenuUtama {
                             back = true;
                             break;
                             }
+>>>>>>> c7c5edba0a022d224436a2cff3d1b326e4f8c958
                         break;
                         case 2:
                         System.out.println("1. Metode eliminasi Gauss");
@@ -316,11 +351,17 @@ class MenuUtama {
                         exit = true;
                         back = true;
                         break;
+                        }
                     }
                 }
             }
             
         }
+<<<<<<< HEAD
+    
+    }
+=======
+>>>>>>> c7c5edba0a022d224436a2cff3d1b326e4f8c958
 
     public final static void clearScreen()
 {
