@@ -859,10 +859,9 @@ public class matriks
                                                 }
 
                                         }
-                                det += tanda*M.mem[1][j]*MKof.DeterminanKofaktor(MKof);
-                                tanda *= -1;
-                        }
-
+                                        det += tanda*M.mem[1][j]*MKof.DeterminanKofaktor(MKof);
+                                        tanda *= -1;
+                                }
                 }
                 return det;
         }
