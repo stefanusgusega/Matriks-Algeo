@@ -1,4 +1,8 @@
 CARA MENJALANKAN PROGRAM MATRIKS
+by
+Kevin Austin Stefano - 13518104
+Hansel Grady Daniel Thamrin - 13518140
+Stefanus Gusega Gunawan - 13518149
 
 1) Nanti akan ada tampilan:
 MENU:
