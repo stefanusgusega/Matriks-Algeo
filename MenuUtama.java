@@ -3,6 +3,12 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 class MenuUtama {
     public static void main (String[] args) {
+        /**  Ini merupakan menu utama program ini
+         * Pertama, akan diset terlebih dahulu variabel exit = false, agar program dapat berjalan terus
+         *  (dengan menggunakan while-do loop).
+         * Lalu, pilihan menu utama akan ditampilkan. Pengguna dipersilakan untuk memilih.
+         * 
+        */
         boolean exit,back;
         int i,j,k,l;
         Scanner input = new Scanner(System.in);
@@ -267,7 +273,7 @@ class MenuUtama {
                             switch(k) {
                                 case 1:
                                 M.InputFileEksNonAug(M);
-                                M.DeterminanInvers(M);
+                                M.DeterminanInversnya(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -277,7 +283,7 @@ class MenuUtama {
                                 break;
                                 case 2:
                                 M.InputUserNonAug(M);
-                                System.out.println("Determinan inversnya : "+M.DeterminanInvers(M));
+                                M.DeterminanInversnya(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -345,7 +351,8 @@ class MenuUtama {
                                 case 1:
                                 M.InputFileEksNonAug(M);
                                 System.out.println("Berikut adalah invers matriksnya :");
-                                (M.InversGaussJordan(M)).TulisMATRIKS();
+                                M.GaussJordanInverse();
+                                M.TulisGaussJordan2(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -356,7 +363,8 @@ class MenuUtama {
                                 case 2:
                                 M.InputUserNonAug(M);
                                 System.out.println("Berikut adalah invers matriksnya :");
-                                (M.InversGaussJordan(M)).TulisMATRIKS();
+                                M.GaussJordanInverse();
+                                M.TulisGaussJordan2(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -378,7 +386,8 @@ class MenuUtama {
                                 case 1:
                                 M.InputFileEksNonAug(M);
                                 System.out.println("Berikut adalah invers matriksnya :");
-                                (M.InversMatriks(M)).TulisMATRIKS();
+                                M.GaussJordanInverse();
+                                M.TulisGaussJordan2(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -389,7 +398,8 @@ class MenuUtama {
                                 case 2:
                                 M.InputUserNonAug(M);
                                 System.out.println("Berikut adalah invers matriksnya :");
-                                (M.InversMatriks(M)).TulisMATRIKS();
+                                M.GaussJordanInverse();
+                                M.TulisGaussJordan2(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {
@@ -480,7 +490,6 @@ class MenuUtama {
                             switch(k) {
                                 case 1:
                                 M.Interpolasi();
-                                M.SPLParametrik(M);
                                 System.out.println("Klik '9' untuk kembali ke menu utama");
                                 l = input.nextInt();
                                 while (l!=9) {

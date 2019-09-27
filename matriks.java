@@ -1,10 +1,12 @@
-
+import java.math.BigDecimal;
+import java.math.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException; 
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+
 
 
 
@@ -161,6 +163,8 @@ public class matriks
                 if (AdaBukanSolSPL(m))
                 {
                         System.out.println("Tidak ada solusi SPL\n");
+                        m.SaveString("Tidak ada solusi SPL");
+
                 }
                 else {
                 for (i=a-1; i>=1; i--)
@@ -184,12 +188,14 @@ public class matriks
                         if (IsSatuUtama(m,IdXPalingBawah(m,j),j))
                         {
                                 System.out.print("x"+j+" = ");
+                                m.SaveString("x"+j+"=");
                                 
                                 if (((j+1)!=m.NKolEff+1) && (m.mem[IdXPalingBawah(m,j)][j+1]!=0))
                                 {        simp = m.mem[IdXPalingBawah(m,j)][j+1]*(-1);
                                         str1=String.valueOf(simp);
                                         str2 = String.valueOf(alph[j+1]);
                                         System.out.print(str1+str2);
+                                        m.SaveString(str1+str2);
                                         ha++;
                                 }
                                 else if(((j+1)==m.NKolEff+1) && (m.mem[IdXPalingBawah(m,j)][j+1]!=0))
@@ -197,6 +203,7 @@ public class matriks
                                         simp = m.mem[IdXPalingBawah(m,j)][j+1];
                                         str1=String.valueOf(simp);
                                         System.out.print(str1);
+                                        m.SaveString(str1);
                                         ha++;
                                 }
                                         
@@ -215,11 +222,13 @@ public class matriks
                                                         if (ha!=1)
                                                         {
                                                                 System.out.print("+"+str1+str2);
+                                                                m.SaveString(str1+str2);
                                                                 ha++;
                                                         }
                                                         else
                                                         {
                                                                 System.out.print(str1+str2);
+                                                                m.SaveString(str1+str2);
                                                                 ha++;
                                                         }
                                                         
@@ -233,17 +242,20 @@ public class matriks
                                                                 if (ha!=1)
                                                                 {
                                                                         System.out.print("+"+str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                                 else
                                                                 {
                                                                         System.out.print(str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                         }
                                                         else
                                                         {
                                                                 System.out.print(str1);
+                                                                m.SaveString(str1);
                                                         }
                                                 }
                                         }
@@ -256,6 +268,7 @@ public class matriks
                                                         str2 = String.valueOf(alph[k]);
                         
                                                         System.out.print(str1+str2);
+                                                        m.SaveString(str1+str2);
                                                         ha++;
                                                 }
                                                 else
@@ -267,17 +280,20 @@ public class matriks
                                                                 if (ha!=1)
                                                                 {
                                                                         System.out.print("+"+str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                                 else
                                                                 {
                                                                         System.out.print(str1);
+                                                                        m.SaveString(str1);
                                                                         ha++;
                                                                 }
                                                         }
                                                         else
                                                         {
                                                                 System.out.print(str1);
+                                                                m.SaveString(str1);
                                                                 ha++;
                                                         }
                                                 }
@@ -311,7 +327,9 @@ public class matriks
                         {
 
                                 System.out.print("x"+j+" = "+alph[j]);
+                                m.SaveString("x"+j+" = "+alph[j]);
                                 System.out.println();
+                                
                         }
                 }
                 
@@ -506,6 +524,19 @@ public class matriks
                 
         }
 
+        void OBEkurangInverse (int barkurang, int kolkurang, int acbar, int ackol)
+        {
+                int j;
+                float ac;
+                ac = (float)mem[(barkurang)][(kolkurang)]/mem[(acbar)][(ackol)];
+    
+                        for (j=1;j<=NKolEff*2;j++)
+                        {
+                        mem[(barkurang)][(j)]=mem[(barkurang)][(j)]-mem[(acbar)][(j)]*ac; 
+                        }
+                
+        }
+
         void OBEUtama (int barkurang, int ackol)
         {
                 int j,ac1,ac2;
@@ -514,6 +545,19 @@ public class matriks
                 float ac;
                 ac=mem[ac1][ac2];
                 for (j=1;j<=NKolEff+1;j++)
+                {
+                       mem[barkurang][j]=(float)mem[barkurang][j]/ac;
+                }
+        }
+
+        void OBEUtamaInverse (int barkurang, int ackol)
+        {
+                int j,ac1,ac2;
+                ac1=barkurang;
+                ac2=ackol;
+                float ac;
+                ac=mem[ac1][ac2];
+                for (j=1;j<=NKolEff*2;j++)
                 {
                        mem[barkurang][j]=(float)mem[barkurang][j]/ac;
                 }
@@ -708,6 +752,107 @@ public class matriks
 
         }
 
+        void GaussJordanInverse ()
+        /* Berlaku matriks lebih dari 2*2 */
+        {
+                int i,j,k,w,utama;
+                boolean keluar;
+                k=0;
+                keluar=false;
+                BikinIdentitas();
+                for (j=1;j<=NKolEff;j++)
+                {
+                        if (IsIdxEff(k+1,j))
+                        {
+                                utama=1+k;
+                                for (i=1+k;i<=NBrsEff;i++)
+                                {
+                                        if (i==utama)
+                                        //saat baris ke i mula2
+                                        {
+                                                keluar=false;
+                                                w=0;
+                                                if (IsFound1Kolom(utama,j))
+                                                //Kalau dalam baris ke i terdapat 1 maka ditukar dengan baris ke 1+k
+                                                {
+                                                        OBEtukarInverse(IdxKolom1(i+k,j),i+k);
+                                                        
+                                                }  
+                                                
+                                                else
+                                                //saat tidak ada 1
+                                                {
+                                                        if (mem[utama][j]==0 )
+                                                        //kalau di baris ke 1+k terdapat 0, maka ditukar sampai bukan 0
+                                                        //kalau ternyata 0 semua, maka next langsung ke step berikutnya(tidk dilakukan aksi appun)
+                                                        {
+                                                                while ((mem[utama][j]==0 )&& (!(keluar)))
+                                                                {
+                                                                        w=w+1;
+                                                                        if ((utama+w)!=NBrsEff)
+                                                                        {
+                                                                                keluar=true;
+                                                                                
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                                OBEtukarInverse(utama+w,i+k);
+                                                                                if(mem[i+k][j]==0)
+                                                                                {
+                                                                                        OBEtukarInverse(utama+w,i+k);
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                        OBEUtamaInverse(utama,j);
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                        else
+                                                        {
+
+                                                                OBEUtamaInverse(utama,j);
+                                                        }
+                                                      
+                                                 }
+
+                                        }
+                                        else
+                                        //saat tidak mencari 1 utama
+                                        {
+
+                                                if ((mem[i][j]!=0 ))
+                                                {
+                                                        OBEkurangInverse(i,j,utama,j);
+                                                }
+                                                                        
+                                        }
+                                }
+
+                                if (IsFound1Kolom(utama,j))
+                                {
+                                        i=1;
+                                        while (i<utama)
+                                        {
+                                                if ((mem[i][j]!=0 ))
+                                                        {
+                                                                OBEkurangInverse(i,j,utama,j);
+                                                        }  
+                                                i=i+1;
+                                        }
+                                }   
+                                
+                        }
+
+                        if (keluar==false)
+                        {
+                         k=k+1;
+                        }
+                        
+                }
+
+        }
+
         void CramerSPL(matriks M)
         //MATRIKS Harus SINGULAR (n x n)
         //Matriks Augmentednya harus ( n x n+1 )
@@ -745,7 +890,6 @@ public class matriks
                                }
                        }
                         solSPL[j]=(float)(a.DeterminanKofaktor(a))/det;
-                        System.out.println(a.DeterminanKofaktor(a));
                         for (i=1;i<=M.NBrsEff;i++)
                        {
                                 float temp;
@@ -757,9 +901,11 @@ public class matriks
                 }
                 
                 System.out.println("Ini hasil SPL Cramer");
+                M.SaveString("Ini hasil SPL Cramer");
                 for (j=1;j<=M.NKolEff;j++)
                 {
                         System.out.println("x"+j+"= "+solSPL[j]);
+                        M.SaveString("x"+j+"= "+solSPL[j]);
                 }
 
         }
@@ -775,6 +921,7 @@ public class matriks
                 else if (DeterminanKofaktor(a)==0)
                 {
                         System.out.println("Maaf ya.. Matriks augmented tidak ada solusi SPLnya karena ngga ada inversnya ~");
+                        a.SaveString("Matriks augmented masukkan harus berisi n x n+1 ya ~~");
                 }
                 else{
                 int  i,k;
@@ -787,33 +934,33 @@ public class matriks
                                M.mem[i][k]=a.mem[i][k];
                         }
                 }
-
-                M = InversMatriks(a);
-                M.TulisMATRIKS();
+                M.GaussJordanInverse();
+                
                 int j;
                 float elmt;
                 float [] solInvers = new float[NBrsEff+1];
                 for (i=1;i<=NBrsEff;i++)
                 {
                         j=NKolEff+1;
-                        {
+                        
                         elmt=0;
                         for (k=1;k<=NKolEff;k++)
                         {
-                                elmt=elmt+M.mem[i][k]*a.mem[k][j];
+                                elmt=elmt+(M.functionTulisGaussJordan2(M)).mem[i][k]*a.mem[k][j];
                         }
                         solInvers[i] = elmt;
-                        }
+                        
                 }
                 
                 System.out.println("Ini hasil SPL Invers");
+                a.SaveString("Ini hasil SPL Invers");
                 for (j=1;j<=NKolEff;j++)
                 {
                         System.out.println("x"+j+"= "+solInvers[j]);
+                        a.SaveString("x"+j+"= "+solInvers[j]);
                 }
         }
         }
-        
         void Interpolasi ()
         {
                 float input1, input2,x,sum;
@@ -842,7 +989,81 @@ public class matriks
                 {
                         sum=sum+mem[i][NKolEff+1]*(float)Math.pow(x,i-1);
                 }
+                System.out.print("p(x) = "+mem[1][NKolEff+1]);
+                for(i=2;i<=NBrsEff;i++)
+                {
+                        if (mem[i][NKolEff+1]>=0)
+                        {
+                        System.out.print("+"+mem[i][NKolEff+1]+"x^"+(i-1));
+                }
+                        else
+                        {
+                                System.out.print("+"+mem[i][NKolEff+1]+"x^"+(i-1));       
+                        }
+                        
+                        sum=sum+mem[i][NKolEff+1]*(float)Math.pow(x,i-1);
+                }
+
+                System.out.println();
                 System.out.println("Hasil interpolasinya : "+sum);
+                SaveString("Hasil interpolasinya : ");
+                SaveFloat(sum);
+        }
+
+        void InterpolasiBigDecimal ()
+        {
+                BigDecimal m;
+                float input1,x,input2;
+                float a = (float)0;
+                BigDecimal ba= new BigDecimal(Float.toString(a));
+                BigDecimal sum= new BigDecimal(Float.toString(a));
+                BigDecimal[][]hem= new BigDecimal[50][50];
+                System.out.println("Masukkan banyaknya titik : ");
+                NKolEff=sc.nextInt();
+                MakeMATRIKS(NKolEff,NKolEff);
+                int i,j;
+                for (i=1;i<=NBrsEff;i++)
+                {
+                        input1 = sc.nextFloat();
+                        BigDecimal input1d = new BigDecimal(Float.toString(input1));
+
+                        for (j=1;j<=NKolEff;j++)
+                        {
+                                hem[i][j]=input1d.pow(j-1);
+                        }
+                        input2 = sc.nextFloat();
+                        
+                        BigDecimal input2d = new BigDecimal(Float.toString(input2));
+                        hem[i][NKolEff+1]=input2d;
+                       
+                }
+                GaussJordan();
+                System.out.println("Masukkan x : ");
+                x=sc.nextFloat();
+                BigDecimal xy = new BigDecimal(Float.toString(x));
+
+
+                for(i=1;i<=NBrsEff;i++)
+                {
+                        sum=hem[i][NKolEff+1].multiply(xy.pow(i-1)).plus();
+                }
+                System.out.print("p(x) = "+hem[1][NKolEff+1]);
+                for(i=2;i<=NBrsEff;i++)
+                {
+                        if (hem[i][NKolEff+1].compareTo(ba) >= 0)
+                        {
+                        System.out.print("+"+hem[i][NKolEff+1]+"x^"+(i-1));
+                }
+                        else
+                        {
+                                System.out.print("+"+hem[i][NKolEff+1]+"x^"+(i-1));       
+                        }
+                        
+                }
+
+                System.out.println();
+                System.out.println("Hasil interpolasinya : "+sum);
+                SaveString("Hasil interpolasinya : ");
         }
 
         float DeterminanKofaktor (matriks M) {
@@ -928,6 +1149,7 @@ public class matriks
                 if (det==-0.0) {
                         det*=-1;
                 }
+                M.SaveFloat(det);
                 return det;
                }
         
@@ -981,12 +1203,15 @@ public class matriks
                 if (det==-0.0) {
                         det*=-1;
                 }
+                M.SaveFloat(det);
                 return det;
                }
-               float DeterminanInvers (matriks M) {
-                float det;        
-                det = 1/(M.DeterminanGauss(M));
-                return det;
+               void DeterminanInversnya (matriks M) {
+                float det;
+                M.GaussJordanInverse();        
+                det = 1/(M.DeterminanGauss(M.functionTulisGaussJordan2(M)));
+                System.out.println("Determinan : "+det);
+                M.SaveFloat(det);
                }
         matriks TransposeMatriks(matriks M) {
                 int i, j;
@@ -1002,7 +1227,7 @@ public class matriks
         
         matriks InversMatriks(matriks M) {
                 if (M.DeterminanKofaktor(M) != 0) {
-                        return KaliKons(M.AdjointMatriks(M), (1 / M.DeterminanKofaktor(M)));
+                        return M.KaliKons(M.AdjointMatriks(M), (1 / M.DeterminanKofaktor(M)));
                 }
                 else {
                         System.out.println("Matriks tidak punya invers");
@@ -1054,24 +1279,75 @@ public class matriks
                 }
                 return hasil;
             }
-	
-	matriks InversGaussJordan(matriks M) {
+        
+            void BikinIdentitas()
+        {
+                int i,j;
+                for (i=1;i<=NBrsEff;i++)
+                {
+                        for (j=NKolEff+1;j<=NKolEff*2;j++)
+                        {
+                                if(i==(j-NKolEff))
+                                {
+                                        mem[i][j]=1;
+                                }
+                                else{
+                                        mem[i][j]=0;
+                                }
+                        }
+                }
+        }
+
+        matriks functionTulisGaussJordan2(matriks M )
+        {
+                int i,j;
+                
+                        matriks akhir = new matriks();
+                        akhir.MakeMATRIKS(M.NBrsEff,M.NKolEff);
+                        for (i=1;i<=M.NBrsEff;i++)
+                        {
+                                for (j=M.NKolEff+1;j<=M.NKolEff*2;j++)
+                                {
+                                                akhir.mem[i][j-M.NBrsEff]=M.mem[i][j];
+                                }
+                        }
+                        return akhir;
+                }
+        
+
+        void TulisGaussJordan2(matriks M )
+        {
+                int i,j;
+                
+                        matriks akhir = new matriks();
+                        akhir.MakeMATRIKS(M.NBrsEff,M.NKolEff);
+                        for (i=1;i<=M.NBrsEff;i++)
+                        {
+                                for (j=M.NKolEff+1;j<=M.NKolEff*2;j++)
+                                {
+                                                akhir.mem[i][j-M.NBrsEff]=M.mem[i][j];
+                                }
+                        }
+                        akhir.TulisMATRIKS();
+                }
+        
+
+	void InversGaussJordan(matriks M) {
                 int i, j, k;
                 float faktor;
                 if (M.DeterminanKofaktor(M) == 0) {
                         System.out.println("Matriks tidak punya balikan");
-                        return M;
                 }
                 else {
                         matriks Campuran = new matriks();
                         Campuran.MakeMATRIKS(M.NBrsEff, M.NKolEff * 2);
-                        for (i = 0; i < M.NBrsEff; i++) {
-                                for (j = 0; j < M.NKolEff * 2; j++) {
+                        for (i = 1; i < M.NBrsEff+1; i++) {
+                                for (j = 1; j < M.NKolEff * 2 + 1; j++) {
                                         if (j < M.NKolEff) {
                                                 Campuran.mem[i][j] = M.mem[i][j];
                                         }
                                         else { // j >= MKolEff
-                                                if (i == j - M.NKolEff) {
+                                                if (i == j - M.NKolEff+1) {
                                                         Campuran.mem[i][j] = 1;
                                                 }
                                                 else {
@@ -1080,60 +1356,59 @@ public class matriks
                                         }
                                 }
                         }
-                        for (j = 0; j < M.NKolEff - 1; j++) {
-                                for (i = j + 1; i < M.NBrsEff; i++) {
+                        for (j = 1; j < M.NKolEff ; j++) {
+                                for (i = j + 2; i < M.NBrsEff+1; i++) {
 					if (Campuran.mem[j][j] == 0) {
 						Campuran.OBEtukarInverse(i, i+1);
 					}
                                         if (Campuran.mem[i][j] != 0) {
-                                                faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
+                                                faktor = (float)Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
-                                                temp.MakeMATRIKS(1, Campuran.NKolEff);
-                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                temp.MakeMATRIKS(1, Campuran.NKolEff+1);
+                                                for (k = 1; k < Campuran.NKolEff+1; k++) {
                                                         temp.mem[0][k] = faktor * Campuran.mem[j][k];
                                                 }
-                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                for (k = 1; k < Campuran.NKolEff+1; k++) {
                                                         Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
                                                 }
                                         Campuran.TulisMATRIKS();
                                         }
                                 }
                         }
-                        for (j = Campuran.NKolEff - 1; j > 0; j--) {
-                                for (i = j - 1; i >= 0; i--) {
+                        for (j = Campuran.NKolEff ; j > 1; j--) {
+                                for (i = j ; i >= 1; i--) {
                                         if (Campuran.mem[j][j] == 0) {
 						Campuran.OBEtukarInverse(i, i-1);
 					}
                                         if (Campuran.mem[i][j] != 0) {
-                                                faktor = Campuran.mem[i][j] / Campuran.mem[j][j];
+                                                faktor = (float)Campuran.mem[i][j] / Campuran.mem[j][j];
                                                 matriks temp = new matriks();
-                                                temp.MakeMATRIKS(1, Campuran.NKolEff);
-                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                temp.MakeMATRIKS(1, Campuran.NKolEff+1);
+                                                for (k = 1; k < Campuran.NKolEff+1; k++) {
                                                         temp.mem[0][k] = faktor * Campuran.mem[j][k];
                                                 }
-                                                for (k = 0; k < Campuran.NKolEff; k++) {
+                                                for (k = 1; k < Campuran.NKolEff+1; k++) {
                                                         Campuran.mem[i][k] = Campuran.mem[i][k] - temp.mem[0][k];
                                                 }
                                         }
-                                        Campuran.TulisMATRIKS();
                                 }
                         }
-                        for (i = 0; i < Campuran.NBrsEff; i++) {
+                        for (i = 1; i < Campuran.NBrsEff+1; i++) {
                                 if (Campuran.mem[i][i] != 1) {
                                         faktor = 1 / Campuran.mem[i][i];
-                                        for (j = 0; j < Campuran.NKolEff; j++) {
+                                        for (j = 1; j < Campuran.NKolEff+1; j++) {
                                                 Campuran.mem[i][j] = Campuran.mem[i][j] * faktor;
                                         }
                                 }
                         }
                         matriks hasil = new matriks();
                         hasil.MakeMATRIKS(M.NBrsEff, M.NKolEff);
-                        for (i = 0; i < M.NBrsEff; i++) {
-                                for (j = 0; j < M.NKolEff; j++) {
-                                        hasil.mem[i][j] = Campuran.mem[i][j+M.NBrsEff];
+                        for (i = 1; i < M.NBrsEff+1; i++) {
+                                for (j = 1; j < M.NKolEff+1; j++) {
+                                        hasil.mem[i][j] = Campuran.mem[i][j+M.NBrsEff+1];
                                 }
                         }
-                        return hasil;
+                        hasil.TulisMATRIKS();
                 }
         }
 
@@ -1256,23 +1531,41 @@ public class matriks
                                 kol = sc.nextInt();
                                 M.BacaMATRIKS(brs,kol);
                         }
-                
-                 
-                        public static void main (String[] args)
+                        
+                        void SaveString(String j)
                         {
-                                float i = (float)1.223;
+                                try (FileWriter writer = new FileWriter("text.txt");
+                                BufferedWriter bw = new BufferedWriter(writer)) {
+                   
+                               bw.write(j);
+                               bw.newLine();
+                   
+                           } catch (IOException e) {
+                               System.err.format("IOException: %s%n", e);
+                           }     
+                                               
+                        }
+
+                        void SaveFloat(float i)
+                        {
                                 String j = String.valueOf(i);
                                 try (FileWriter writer = new FileWriter("text.txt");
                                 BufferedWriter bw = new BufferedWriter(writer)) {
                    
                                bw.write(j);
                                bw.newLine();
-                               bw.write(j);
                    
                            } catch (IOException e) {
                                System.err.format("IOException: %s%n", e);
-                           }                               
+                           }     
+                                               
+                        }
+                 
+                        public static void main (String[] args)
+                        {
                                 matriks M = new matriks ();
-                                M.InputFileEksAug(M);
+                                M.BacaMATRIKS(3,3);
+                                M.InverseSPL(M);
                         }
                 }
+
